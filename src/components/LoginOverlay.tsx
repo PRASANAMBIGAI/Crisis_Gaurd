@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState } from 'react';
@@ -113,6 +112,9 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
                   <SelectItem value="cyber">Cyber Cell</SelectItem>
                   <SelectItem value="rapid">Rapid Action Force</SelectItem>
                   <SelectItem value="intel">Strategic Intelligence</SelectItem>
+                  <SelectItem value="info-ops">Information Operations</SelectItem>
+                  <SelectItem value="counter-disinfo">Counter-Disinformation Task Force</SelectItem>
+                  <SelectItem value="signal">Signal Intelligence</SelectItem>
                 </SelectContent>
               </Select>
             </div>
