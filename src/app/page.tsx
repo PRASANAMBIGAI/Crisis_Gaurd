@@ -103,7 +103,7 @@ export default function Home() {
               <PopoverTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative h-10 w-10">
                   <Bell className="w-5 h-5" />
-                  {recentAlerts && recentAlerts.some(a => a.harmScore > 60) && (
+                  {recentAlerts && recentAlerts.some(a => a.harmScore >= 70) && (
                     <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full animate-pulse border-2 border-background" />
                   )}
                 </Button>
@@ -122,15 +122,15 @@ export default function Home() {
                       {recentAlerts.map((alert) => (
                         <div key={alert.id} className="p-4 hover:bg-secondary/10 transition-colors cursor-pointer group">
                           <div className="flex items-start justify-between mb-1">
-                            <Badge className={alert.harmScore > 60 ? "bg-rose-500/10 text-rose-500 border-rose-500/20" : "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"}>
-                              {alert.harmScore > 85 ? 'Lethal' : alert.harmScore > 60 ? 'Threat' : 'Safe'}
+                            <Badge className={alert.harmScore >= 70 ? "bg-rose-500/10 text-rose-500 border-rose-500/20" : "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"}>
+                              {alert.harmScore > 85 ? 'Lethal' : alert.harmScore >= 70 ? 'Priority' : 'Safe'}
                             </Badge>
                             <span className="text-[10px] text-muted-foreground font-mono">{new Date(alert.analysisDate).toLocaleTimeString()}</span>
                           </div>
                           <p className="text-xs font-medium line-clamp-2 group-hover:text-primary transition-colors">{alert.text || 'Multimedia Intel Analyzed'}</p>
                           <div className="mt-2 flex items-center gap-2">
                             <div className="flex-1 h-1 bg-secondary rounded-full overflow-hidden">
-                              <div className={`h-full ${alert.harmScore > 60 ? 'bg-rose-500' : 'bg-emerald-500'}`} style={{ width: `${alert.harmScore}%` }} />
+                              <div className={`h-full ${alert.harmScore >= 70 ? 'bg-rose-500' : 'bg-emerald-500'}`} style={{ width: `${alert.harmScore}%` }} />
                             </div>
                             <span className="text-[10px] font-bold">{alert.harmScore}%</span>
                           </div>

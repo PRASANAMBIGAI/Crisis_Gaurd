@@ -33,7 +33,7 @@ export function LiveThreatMap() {
   const db = useFirestore();
   const { user } = useUser();
 
-  // Load real intelligence entries from Firestore only if user is authenticated
+  // Load real intelligence entries from Firestore
   const intelQuery = useMemoFirebase(() => {
     if (!user) return null;
     return query(
@@ -60,21 +60,21 @@ export function LiveThreatMap() {
 
   const getRiskLabel = (score: number) => {
     if (score < 30) return 'Safe';
-    if (score < 60) return 'Warning';
-    if (score < 85) return 'Danger';
+    if (score < 70) return 'Warning';
+    if (score < 85) return 'Priority';
     return 'Lethal';
   };
 
   const getRiskColor = (score: number) => {
     if (score < 30) return 'text-emerald-500';
-    if (score < 60) return 'text-amber-500';
+    if (score < 70) return 'text-amber-500';
     if (score < 85) return 'text-rose-500';
     return 'text-rose-600 font-extrabold';
   };
 
   const getRiskBg = (score: number) => {
     if (score < 30) return 'bg-emerald-500';
-    if (score < 60) return 'bg-amber-500';
+    if (score < 70) return 'bg-amber-500';
     if (score < 85) return 'bg-rose-500';
     return 'bg-rose-600 animate-pulse';
   };
@@ -107,7 +107,7 @@ export function LiveThreatMap() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight">Live Threat Map</h2>
-          <p className="text-muted-foreground">Tactical visualization of the Harm Index across regional sectors.</p>
+          <p className="text-muted-foreground">Tactical visualization using 70+ Priority Alert logic.</p>
         </div>
         <div className="flex gap-2">
           <Badge variant="outline" className="gap-1 bg-blue-500/10 text-blue-500 border-blue-500/20">
@@ -116,7 +116,7 @@ export function LiveThreatMap() {
           </Badge>
           <Badge variant="outline" className="gap-1 bg-rose-500/10 text-rose-500 border-rose-500/20">
             <ShieldAlert className="w-3 h-3" />
-            {allThreats.filter(t => t.harmScore > 60).length} High-Risk Hotspots
+            {allThreats.filter(t => t.harmScore >= 70).length} Priority Hotspots
           </Badge>
         </div>
       </div>
@@ -159,7 +159,7 @@ export function LiveThreatMap() {
                           variant="outline" 
                           className={`h-5 px-1.5 text-[9px] uppercase font-bold border-transparent ${
                             threat.harmScore > 85 ? 'bg-rose-600 text-white' : 
-                            threat.harmScore > 60 ? 'bg-rose-500/20 text-rose-500' : 
+                            threat.harmScore >= 70 ? 'bg-rose-500/20 text-rose-500' : 
                             threat.harmScore > 30 ? 'bg-amber-500/20 text-amber-500' : 
                             'bg-emerald-500/20 text-emerald-500'
                           }`}
@@ -242,11 +242,11 @@ export function LiveThreatMap() {
              </div>
              <div className="flex items-center gap-2.5 text-[10px] font-bold">
                 <div className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-                <span>Danger Zone (60-84)</span>
+                <span>Priority Alert (70-84)</span>
              </div>
              <div className="flex items-center gap-2.5 text-[10px] font-bold">
                 <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                <span>Warning State (30-59)</span>
+                <span>Warning State (30-69)</span>
              </div>
              <div className="flex items-center gap-2.5 text-[10px] font-bold">
                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />

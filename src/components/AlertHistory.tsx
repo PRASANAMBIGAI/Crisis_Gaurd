@@ -16,7 +16,6 @@ export function AlertHistory() {
   const { user } = useUser();
   
   // Properly memoize the query using useMemoFirebase as required by the useCollection hook
-  // Only query if user is authenticated
   const messagesQuery = useMemoFirebase(() => {
     if (!user) return null;
     return query(collection(db, 'socialMediaMessages'), orderBy('analysisDate', 'desc'));
@@ -28,7 +27,7 @@ export function AlertHistory() {
     if (!alerts || alerts.length === 0) return;
     const csvContent = "data:text/csv;charset=utf-8," 
       + ["ID,Summary,Date,Score,Status"].join(",") + "\n"
-      + alerts.map(a => `${a.id},"${a.text.slice(0, 50)}...",${a.analysisDate},${a.harmScore},${a.harmScore > 60 ? 'High' : 'Low'}`).join("\n");
+      + alerts.map(a => `${a.id},"${a.text.slice(0, 50)}...",${a.analysisDate},${a.harmScore},${a.harmScore >= 70 ? 'Priority' : 'Safe'}`).join("\n");
     
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -44,7 +43,7 @@ export function AlertHistory() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight">Intelligence Log</h2>
-          <p className="text-muted-foreground">Historical records archived in the tactical cloud database.</p>
+          <p className="text-muted-foreground">Historical records archived with 40/40/20 calibration logic.</p>
         </div>
         <Button onClick={exportReport} variant="outline" className="gap-2 border-primary/20 hover:bg-primary/10">
           <Download className="w-4 h-4" />
@@ -76,15 +75,15 @@ export function AlertHistory() {
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <div className="w-16 h-1 bg-secondary rounded-full overflow-hidden">
-                        <div className={`h-full ${alert.harmScore > 85 ? 'bg-rose-600' : alert.harmScore > 60 ? 'bg-rose-500' : 'bg-emerald-500'}`} style={{ width: `${alert.harmScore}%` }} />
+                        <div className={`h-full ${alert.harmScore > 85 ? 'bg-rose-600' : alert.harmScore >= 70 ? 'bg-rose-500' : 'bg-emerald-500'}`} style={{ width: `${alert.harmScore}%` }} />
                       </div>
                       <span className="text-[10px] font-bold">{alert.harmScore}</span>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className={`h-6 text-[9px] uppercase ${alert.harmScore > 85 ? 'bg-rose-600 text-white' : alert.harmScore > 60 ? 'bg-rose-500/10 text-rose-500' : 'bg-emerald-500/10 text-emerald-500'}`}>
-                      {alert.harmScore > 85 ? <ShieldAlert className="w-3 h-3 mr-1" /> : alert.harmScore > 60 ? <AlertTriangle className="w-3 h-3 mr-1" /> : <CheckCircle2 className="w-3 h-3 mr-1" />}
-                      {alert.harmScore > 85 ? 'Critical' : alert.harmScore > 60 ? 'High' : 'Low'}
+                    <Badge variant="outline" className={`h-6 text-[9px] uppercase ${alert.harmScore > 85 ? 'bg-rose-600 text-white' : alert.harmScore >= 70 ? 'bg-rose-500/10 text-rose-500' : 'bg-emerald-500/10 text-emerald-500'}`}>
+                      {alert.harmScore > 85 ? <ShieldAlert className="w-3 h-3 mr-1" /> : alert.harmScore >= 70 ? <AlertTriangle className="w-3 h-3 mr-1" /> : <CheckCircle2 className="w-3 h-3 mr-1" />}
+                      {alert.harmScore > 85 ? 'Critical' : alert.harmScore >= 70 ? 'Priority' : 'Safe'}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right"><Button variant="ghost" size="icon"><Eye className="w-4 h-4" /></Button></TableCell>

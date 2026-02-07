@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState, useRef } from 'react';
@@ -68,18 +69,24 @@ export function AnalysisPanel() {
 
   const calculateHarmScore = (text: string, isMismatch: boolean, attachmentCount: number) => {
     const lowerText = text.toLowerCase();
+    
+    // Parse text for rage/fear (Emotional Intensity)
     const emotionalMatches = EMOTIONAL_KEYWORDS.filter(kw => lowerText.includes(kw.toLowerCase()));
     let emotionalScore = Math.min(100, emotionalMatches.length * 35);
     if (emotionalMatches.length === 1) emotionalScore = 40;
-    else if (emotionalMatches.length >= 3) emotionalScore = 95;
+    else if (emotionalMatches.length >= 3) emotionalScore = 100;
 
+    // Identify commands like 'gather' or 'attack' (Call to Action)
     const ctaMatches = CALL_TO_ACTION_KEYWORDS.filter(kw => lowerText.includes(kw.toLowerCase()));
     let ctaScore = Math.min(100, ctaMatches.length * 40);
     if (ctaMatches.length === 1) ctaScore = 60;
     else if (ctaMatches.length >= 2) ctaScore = 100;
 
-    const mismatchScore = isMismatch ? 100 : (attachmentCount > 0 ? 15 : 0);
-    const finalScore = (emotionalScore * 0.30) + (ctaScore * 0.45) + (mismatchScore * 0.25);
+    // Recycled media flag (Context Mismatch)
+    const mismatchScore = isMismatch ? 100 : (attachmentCount > 0 ? 20 : 0);
+    
+    // DECISION LOGIC: Harm Score = (Emotional Intensity × 0.4) + (Call to Action × 0.4) + (Context Mismatch × 0.2)
+    const finalScore = (emotionalScore * 0.40) + (ctaScore * 0.40) + (mismatchScore * 0.20);
 
     return { 
       emotionalScore: Math.round(emotionalScore), 
@@ -102,9 +109,9 @@ export function AnalysisPanel() {
       const aiResult = await summarizeRiskFactors({
         messageText: message || "Multimedia intake: " + attachments.map(a => a.name).join(', '),
         emotionalIntensity: scores.emotionalScore,
-        callToAction: scores.ctaScore,
+        callToActions: scores.ctaScore,
         contextMismatch: scores.mismatchScore
-      });
+      } as any);
 
       const analysisData = {
         id: Math.random().toString(36).substr(2, 9),
@@ -134,7 +141,15 @@ export function AnalysisPanel() {
         aiData: aiResult
       });
 
-      toast({ title: "Intelligence Saved", description: "Record archived and plotted on tactical grid." });
+      if (scores.finalScore >= 70) {
+        toast({ 
+          title: "PRIORITY ALERT TRIGGERED", 
+          description: "Harm Index exceeds 70. Immediate tactical response requested.",
+          variant: "destructive"
+        });
+      } else {
+        toast({ title: "Intelligence Saved", description: "Record archived and plotted on tactical grid." });
+      }
     } catch (error) {
       toast({ variant: "destructive", title: "AI Analysis Failed", description: "Check tactical core connectivity." });
     } finally {
@@ -192,7 +207,7 @@ export function AnalysisPanel() {
         <Card className="border-border/50 shadow-sm bg-card/30 backdrop-blur-sm">
           <CardHeader className="pb-4 border-b border-border/10">
             <CardTitle className="text-xl font-bold">Intelligence Intake</CardTitle>
-            <CardDescription>Calibrated with persistent pattern recognition.</CardDescription>
+            <CardDescription>Calibrated with 40/40/20 weighted decision logic.</CardDescription>
           </CardHeader>
           <CardContent className="pt-6 space-y-6">
             <Tabs value={activeSourceTab} onValueChange={setActiveSourceTab} className="w-full">
@@ -312,12 +327,16 @@ export function AnalysisPanel() {
                 <RiskMeter score={results.score} />
                 <div className="grid gap-3">
                   <div className="flex justify-between p-3 rounded-lg bg-secondary/30 border text-sm">
-                    <span className="text-muted-foreground">Emotional Volatility</span>
-                    <Badge variant={results.emotionalScore > 50 ? "destructive" : "secondary"}>{results.emotionalScore}/100</Badge>
+                    <span className="text-muted-foreground">Emotional Volatility (40%)</span>
+                    <Badge variant={results.emotionalScore >= 70 ? "destructive" : "secondary"}>{results.emotionalScore}/100</Badge>
                   </div>
                   <div className="flex justify-between p-3 rounded-lg bg-secondary/30 border text-sm">
-                    <span className="text-muted-foreground">CTA (Behavioral Incitement)</span>
-                    <Badge variant={results.ctaScore > 50 ? "destructive" : "secondary"}>{results.ctaScore}/100</Badge>
+                    <span className="text-muted-foreground">CTA Intensity (40%)</span>
+                    <Badge variant={results.ctaScore >= 70 ? "destructive" : "secondary"}>{results.ctaScore}/100</Badge>
+                  </div>
+                  <div className="flex justify-between p-3 rounded-lg bg-secondary/30 border text-sm">
+                    <span className="text-muted-foreground">Context Mismatch (20%)</span>
+                    <Badge variant={results.mismatchScore >= 70 ? "destructive" : "secondary"}>{results.mismatchScore}/100</Badge>
                   </div>
                 </div>
               </CardContent>
