@@ -27,6 +27,9 @@
         "harmScore": { "type": "number" },
         "analysisDate": { "type": "string", "format": "date-time" },
         "officerId": { "type": "string" },
+        "locationName": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
         "attachments": {
           "type": "array",
           "items": {

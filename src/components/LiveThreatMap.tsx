@@ -1,14 +1,16 @@
 
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Map as MapIcon, ShieldAlert, Globe, Crosshair, AlertTriangle, Zap, Activity } from 'lucide-react';
+import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
+import { collection, query, orderBy, limit } from 'firebase/firestore';
 
-// Dynamically import Map components to prevent SSR errors (Leaflet requires window)
+// Dynamically import Map components to prevent SSR errors
 const MapContainer = dynamic(
   () => import('react-leaflet').then((mod) => mod.MapContainer),
   { ssr: false }
@@ -28,10 +30,19 @@ const Popup = dynamic(
 
 export function LiveThreatMap() {
   const [isClient, setIsClient] = useState(false);
+  const db = useFirestore();
+
+  // Load real intelligence entries from Firestore
+  const intelQuery = useMemoFirebase(() => query(
+    collection(db, 'socialMediaMessages'),
+    orderBy('analysisDate', 'desc'),
+    limit(50)
+  ), [db]);
+  
+  const { data: realThreats, isLoading: isLoadingThreats } = useCollection(intelQuery as any);
 
   useEffect(() => {
     setIsClient(true);
-    // Fix for Leaflet default marker icons in Next.js
     import('leaflet').then((L) => {
       // @ts-ignore
       delete L.Icon.Default.prototype._getIconUrl;
@@ -43,15 +54,12 @@ export function LiveThreatMap() {
     });
   }, []);
 
-  const threats = [
-    { id: 1, position: [28.6139, 77.2090], city: "New Delhi", level: "Lethal", score: 96, factors: "High CTA + Mismatch" },
-    { id: 2, position: [19.0760, 72.8777], city: "Mumbai", level: "Danger", score: 82, factors: "Emotional Intensity" },
-    { id: 3, position: [12.9716, 77.5946], city: "Bengaluru", level: "Warning", score: 48, factors: "Suspicious Links" },
-    { id: 4, position: [13.0827, 80.2707], city: "Chennai", level: "Danger", score: 71, factors: "Coordinated Bot Activity" },
-    { id: 5, position: [22.5726, 88.3639], city: "Kolkata", level: "Lethal", score: 89, factors: "Verified Mismatch" },
-    { id: 6, position: [17.3850, 78.4867], city: "Hyderabad", level: "Warning", score: 35, factors: "Linguistic Fluctuations" },
-    { id: 7, position: [23.0225, 72.5714], city: "Ahmedabad", level: "Safe", score: 12, factors: "Normal Traffic" },
-  ];
+  const getRiskLabel = (score: number) => {
+    if (score < 30) return 'Safe';
+    if (score < 60) return 'Warning';
+    if (score < 85) return 'Danger';
+    return 'Lethal';
+  };
 
   const getRiskColor = (score: number) => {
     if (score < 30) return 'text-emerald-500';
@@ -66,6 +74,18 @@ export function LiveThreatMap() {
     if (score < 85) return 'bg-rose-500';
     return 'bg-rose-600 animate-pulse';
   };
+
+  // Combine demo threats with real Firestore threats
+  const allThreats = useMemo(() => {
+    const demoThreats = [
+      { id: 'demo-1', latitude: 28.6139, longitude: 77.2090, locationName: "New Delhi", harmScore: 96, aiSummary: "High CTA + Mismatch" },
+      { id: 'demo-2', latitude: 19.0760, longitude: 72.8777, locationName: "Mumbai", harmScore: 82, aiSummary: "Emotional Intensity" },
+      { id: 'demo-3', latitude: 12.9716, longitude: 77.5946, locationName: "Bengaluru", harmScore: 48, aiSummary: "Suspicious Links" },
+    ];
+    
+    const dbThreats = (realThreats || []).filter(t => t.latitude && t.longitude);
+    return [...demoThreats, ...dbThreats];
+  }, [realThreats]);
 
   if (!isClient) {
     return (
@@ -92,7 +112,7 @@ export function LiveThreatMap() {
           </Badge>
           <Badge variant="outline" className="gap-1 bg-rose-500/10 text-rose-500 border-rose-500/20">
             <ShieldAlert className="w-3 h-3" />
-            {threats.filter(t => t.score > 60).length} High-Risk Hotspots
+            {allThreats.filter(t => t.harmScore > 60).length} High-Risk Hotspots
           </Badge>
         </div>
       </div>
@@ -107,7 +127,7 @@ export function LiveThreatMap() {
             <div className="flex gap-2">
               <Button variant="outline" size="sm" className="h-7 text-[10px] bg-background/50 border-primary/20">
                 <Zap className="w-3 h-3 mr-1 text-accent" />
-                Auto-Sync
+                Live Feed Sync
               </Button>
             </div>
           </div>
@@ -125,41 +145,41 @@ export function LiveThreatMap() {
                 url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
               />
-              {threats.map((threat) => (
-                <Marker key={threat.id} position={threat.position as [number, number]}>
+              {allThreats.map((threat) => (
+                <Marker key={threat.id} position={[threat.latitude, threat.longitude]}>
                   <Popup className="custom-leaflet-popup">
-                    <div className="p-4 w-56 space-y-3">
+                    <div className="p-4 w-64 space-y-3">
                       <div className="flex items-center justify-between border-b pb-2 border-border/20">
-                        <span className="font-bold text-sm tracking-tight">{threat.city}</span>
+                        <span className="font-bold text-sm tracking-tight">{threat.locationName}</span>
                         <Badge 
                           variant="outline" 
                           className={`h-5 px-1.5 text-[9px] uppercase font-bold border-transparent ${
-                            threat.score > 85 ? 'bg-rose-600 text-white' : 
-                            threat.score > 60 ? 'bg-rose-500/20 text-rose-500' : 
-                            threat.score > 30 ? 'bg-amber-500/20 text-amber-500' : 
+                            threat.harmScore > 85 ? 'bg-rose-600 text-white' : 
+                            threat.harmScore > 60 ? 'bg-rose-500/20 text-rose-500' : 
+                            threat.harmScore > 30 ? 'bg-amber-500/20 text-amber-500' : 
                             'bg-emerald-500/20 text-emerald-500'
                           }`}
                         >
-                          {threat.level}
+                          {getRiskLabel(threat.harmScore)}
                         </Badge>
                       </div>
                       
                       <div className="space-y-1">
                         <div className="flex justify-between items-center text-[10px] uppercase font-bold text-muted-foreground">
                           <span>Harm Index</span>
-                          <span className={getRiskColor(threat.score)}>{threat.score}</span>
+                          <span className={getRiskColor(threat.harmScore)}>{threat.harmScore}</span>
                         </div>
                         <div className="w-full h-1.5 bg-secondary rounded-full overflow-hidden">
-                          <div className={`h-full ${getRiskBg(threat.score)}`} style={{ width: `${threat.score}%` }} />
+                          <div className={`h-full ${getRiskBg(threat.harmScore)}`} style={{ width: `${threat.harmScore}%` }} />
                         </div>
                       </div>
 
                       <div className="bg-secondary/30 p-2 rounded border border-border/10">
                         <p className="text-[9px] text-muted-foreground uppercase font-bold mb-1 flex items-center gap-1">
                           <Activity className="w-3 h-3 text-primary" />
-                          Primary Factor
+                          Intel Summary
                         </p>
-                        <p className="text-[10px] font-medium">{threat.factors}</p>
+                        <p className="text-[10px] font-medium line-clamp-2">{threat.aiSummary}</p>
                       </div>
 
                       <Button size="sm" className="w-full h-8 text-[10px] font-bold uppercase tracking-widest bg-primary hover:bg-primary/90">
@@ -172,7 +192,6 @@ export function LiveThreatMap() {
             </MapContainer>
           </div>
 
-          {/* Map Controls Floating Overlay */}
           <div className="absolute bottom-6 left-6 z-10 p-5 rounded-2xl bg-card/90 backdrop-blur-md border border-primary/20 shadow-2xl w-64 space-y-4 pointer-events-auto">
              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-primary">
                 <MapIcon className="w-4 h-4" />
@@ -211,7 +230,6 @@ export function LiveThreatMap() {
              </div>
           </div>
 
-          {/* Legend Overlay */}
           <div className="absolute top-4 right-4 z-10 p-4 rounded-xl bg-card/80 backdrop-blur-md border border-border/50 space-y-2.5 pointer-events-none">
              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground border-b border-border/10 pb-1 mb-2">Visual Glossary</p>
              <div className="flex items-center gap-2.5 text-[10px] font-bold">

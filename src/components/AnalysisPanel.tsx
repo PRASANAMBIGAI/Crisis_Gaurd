@@ -17,7 +17,9 @@ import {
   Link as LinkIcon,
   UploadCloud,
   X,
-  Plus
+  Plus,
+  MapPin,
+  Crosshair
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,12 +27,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RiskMeter } from "./RiskMeter";
 import { EMOTIONAL_KEYWORDS, CALL_TO_ACTION_KEYWORDS, SAMPLE_CASES } from "@/lib/detection-constants";
 import { summarizeRiskFactors } from "@/ai/flows/summarize-risk-factors";
 import { toast } from "@/hooks/use-toast";
-import { getFirestore, collection, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { useUser } from '@/firebase';
 
 interface MediaAttachment {
@@ -47,6 +50,9 @@ export function AnalysisPanel() {
   const [mediaUrl, setMediaUrl] = useState('');
   const [attachments, setAttachments] = useState<MediaAttachment[]>([]);
   const [contextMismatch, setContextMismatch] = useState(false);
+  const [locationName, setLocationName] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [activeSourceTab, setActiveSourceTab] = useState('text');
   
@@ -110,10 +116,12 @@ export function AnalysisPanel() {
         analysisDate: new Date().toISOString(),
         aiSummary: summaryResult.summary,
         officerId: user?.uid || 'anonymous',
+        locationName: locationName || 'Unknown Sector',
+        latitude: parseFloat(latitude) || 0,
+        longitude: parseFloat(longitude) || 0,
         attachments: attachments.map(({type, url, name}) => ({type, url, name}))
       };
 
-      // Save to persistent intelligence database (Firestore)
       setDoc(doc(db, 'socialMediaMessages', analysisData.id), analysisData);
 
       setResults({
@@ -124,7 +132,7 @@ export function AnalysisPanel() {
         aiSummary: summaryResult.summary
       });
 
-      toast({ title: "Intelligence Saved", description: "Record archived in global threat log." });
+      toast({ title: "Intelligence Saved", description: "Record archived and plotted on tactical grid." });
     } catch (error) {
       toast({ variant: "destructive", title: "AI Analysis Failed", description: "Check tactical core connectivity." });
     } finally {
@@ -162,6 +170,18 @@ export function AnalysisPanel() {
     };
     setAttachments(prev => [...prev, newAttachment]);
     setMediaUrl('');
+  };
+
+  const useCurrentLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLatitude(position.coords.latitude.toFixed(4));
+        setLongitude(position.coords.longitude.toFixed(4));
+        toast({ title: "GPS Locked", description: "Coordinates synced from local sensor." });
+      });
+    } else {
+      toast({ variant: "destructive", title: "GPS Error", description: "Local sensors unavailable." });
+    }
   };
 
   return (
@@ -224,7 +244,51 @@ export function AnalysisPanel() {
               </div>
             )}
 
-            <div className="flex items-center space-x-3 p-4 rounded-xl bg-secondary/20 border border-dashed">
+            <div className="space-y-4 p-4 rounded-xl bg-secondary/10 border border-border/50">
+              <div className="flex items-center justify-between mb-2">
+                <Label className="text-xs font-black uppercase tracking-[0.15em] text-primary flex items-center gap-2">
+                  <MapPin className="w-3 h-3" />
+                  Geospatial Intelligence
+                </Label>
+                <Button variant="ghost" size="sm" className="h-6 text-[10px] gap-1 px-2" onClick={useCurrentLocation}>
+                  <Crosshair className="w-3 h-3" />
+                  Auto-Locate
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-[10px] uppercase font-bold text-muted-foreground">Regional Sector / City</Label>
+                  <Input 
+                    placeholder="e.g. New Delhi" 
+                    className="h-9 bg-background/50" 
+                    value={locationName} 
+                    onChange={(e) => setLocationName(e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Latitude</Label>
+                    <Input 
+                      placeholder="0.0000" 
+                      className="h-9 bg-background/50 font-mono text-xs" 
+                      value={latitude} 
+                      onChange={(e) => setLatitude(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground">Longitude</Label>
+                    <Input 
+                      placeholder="0.0000" 
+                      className="h-9 bg-background/50 font-mono text-xs" 
+                      value={longitude} 
+                      onChange={(e) => setLongitude(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-3 p-4 rounded-xl bg-secondary/20 border border-dashed border-primary/20">
               <Checkbox checked={contextMismatch} onCheckedChange={(c) => setContextMismatch(c === true)} />
               <label className="text-sm font-medium">Manual Context Mismatch <span className="text-muted-foreground">(Visual-Text Discrepancy)</span></label>
             </div>
