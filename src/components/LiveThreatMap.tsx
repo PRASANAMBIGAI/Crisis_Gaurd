@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Map as MapIcon, ShieldAlert, Globe, Crosshair, AlertTriangle, Zap, Activity } from 'lucide-react';
-import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
+import { useCollection, useFirestore, useMemoFirebase, useUser } from '@/firebase';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 
 // Dynamically import Map components to prevent SSR errors
@@ -31,13 +31,17 @@ const Popup = dynamic(
 export function LiveThreatMap() {
   const [isClient, setIsClient] = useState(false);
   const db = useFirestore();
+  const { user } = useUser();
 
-  // Load real intelligence entries from Firestore
-  const intelQuery = useMemoFirebase(() => query(
-    collection(db, 'socialMediaMessages'),
-    orderBy('analysisDate', 'desc'),
-    limit(50)
-  ), [db]);
+  // Load real intelligence entries from Firestore only if user is authenticated
+  const intelQuery = useMemoFirebase(() => {
+    if (!user) return null;
+    return query(
+      collection(db, 'socialMediaMessages'),
+      orderBy('analysisDate', 'desc'),
+      limit(50)
+    );
+  }, [db, user]);
   
   const { data: realThreats, isLoading: isLoadingThreats } = useCollection(intelQuery as any);
 

@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState, useEffect } from 'react';
@@ -46,12 +47,15 @@ export default function Home() {
   const [badgeId, setBadgeId] = useState<string>('');
   const [role, setRole] = useState<string>('Officer');
 
-  // Load high-risk alerts for the notification center
-  const alertQuery = useMemoFirebase(() => query(
-    collection(db, 'socialMediaMessages'),
-    orderBy('analysisDate', 'desc'),
-    limit(5)
-  ), [db]);
+  // Load high-risk alerts for the notification center only if user is authenticated
+  const alertQuery = useMemoFirebase(() => {
+    if (!user) return null;
+    return query(
+      collection(db, 'socialMediaMessages'),
+      orderBy('analysisDate', 'desc'),
+      limit(5)
+    );
+  }, [db, user]);
 
   const { data: recentAlerts } = useCollection(alertQuery as any);
 
