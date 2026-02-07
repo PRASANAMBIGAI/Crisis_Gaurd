@@ -24,6 +24,14 @@ import { LiveThreatMap } from "@/components/LiveThreatMap";
 import { AnalyticsView } from "@/components/AnalyticsView";
 import { AlertHistory } from "@/components/AlertHistory";
 import { SettingsView } from "@/components/SettingsView";
+import appData from "@/lib/app-data.json";
+
+const IconMap = {
+  Globe: Globe,
+  ShieldAlert: ShieldAlert,
+  TrendingUp: TrendingUp,
+  AlertTriangle: AlertTriangle
+};
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -48,34 +56,34 @@ export default function Home() {
               <div className="flex gap-3">
                 <Card className="bg-emerald-500/10 border-emerald-500/20 px-4 py-2 flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                  <span className="text-xs font-bold text-emerald-500 uppercase tracking-tighter">System Normal</span>
+                  <span className="text-xs font-bold text-emerald-500 uppercase tracking-tighter">
+                    {appData.dashboard.systemStatus}
+                  </span>
                 </Card>
               </div>
             </div>
 
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { label: 'Total Scanned', value: '42.8k', change: '+12%', icon: Globe, color: 'text-blue-500' },
-                { label: 'High Priority', value: '142', change: '+5%', icon: ShieldAlert, color: 'text-rose-500' },
-                { label: 'Avg Harm Index', value: '24.2', change: '-2%', icon: TrendingUp, color: 'text-emerald-500' },
-                { label: 'Active Alerts', value: '12', change: '+1', icon: AlertTriangle, color: 'text-amber-500' },
-              ].map((stat, i) => (
-                <Card key={i} className="bg-card border-border/50 hover:border-primary/20 transition-all duration-300">
-                  <CardContent className="p-4 flex items-center justify-between">
-                    <div>
-                      <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
-                      <p className="text-2xl font-bold mt-1">{stat.value}</p>
-                      <p className={`text-[10px] font-bold mt-0.5 ${stat.change.startsWith('+') ? 'text-emerald-500' : 'text-rose-500'}`}>
-                        {stat.change} <span className="text-muted-foreground font-normal">since last hour</span>
-                      </p>
-                    </div>
-                    <div className={`p-2 rounded-lg bg-secondary/50 ${stat.color}`}>
-                      <stat.icon className="w-5 h-5" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+              {appData.dashboard.stats.map((stat, i) => {
+                const IconComponent = IconMap[stat.icon as keyof typeof IconMap] || Globe;
+                return (
+                  <Card key={i} className="bg-card border-border/50 hover:border-primary/20 transition-all duration-300">
+                    <CardContent className="p-4 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</p>
+                        <p className="text-2xl font-bold mt-1">{stat.value}</p>
+                        <p className={`text-[10px] font-bold mt-0.5 ${stat.change.startsWith('+') ? 'text-emerald-500' : 'text-rose-500'}`}>
+                          {stat.change} <span className="text-muted-foreground font-normal">since last hour</span>
+                        </p>
+                      </div>
+                      <div className={`p-2 rounded-lg bg-secondary/50 ${stat.color}`}>
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
 
             {/* Main Analysis Section */}

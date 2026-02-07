@@ -1,0 +1,36 @@
+
+{
+  "dashboard": {
+    "systemStatus": "System Normal",
+    "stats": [
+      {
+        "label": "Total Scanned",
+        "value": "42.8k",
+        "change": "+12%",
+        "icon": "Globe",
+        "color": "text-blue-500"
+      },
+      {
+        "label": "High Priority",
+        "value": "142",
+        "change": "+5%",
+        "icon": "ShieldAlert",
+        "color": "text-rose-500"
+      },
+      {
+        "label": "Avg Harm Index",
+        "value": "24.2",
+        "change": "-2%",
+        "icon": "TrendingUp",
+        "color": "text-emerald-500"
+      },
+      {
+        "label": "Active Alerts",
+        "value": "12",
+        "change": "+1",
+        "icon": "AlertTriangle",
+        "color": "text-amber-500"
+      }
+    ]
+  }
+}
