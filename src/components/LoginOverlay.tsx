@@ -17,7 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 
 interface LoginOverlayProps {
-  onLoginSuccess: () => void;
+  onLoginSuccess: (badgeId: string) => void;
 }
 
 export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
@@ -36,7 +36,7 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
       setIsVerifying(false);
       setIsClosing(true);
       // Wait for fade-out animation
-      setTimeout(onLoginSuccess, 500);
+      setTimeout(() => onLoginSuccess(badgeId), 500);
     }, 2000);
   };
 

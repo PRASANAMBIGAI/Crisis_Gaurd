@@ -36,6 +36,12 @@ const IconMap = {
 export default function Home() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [badgeId, setBadgeId] = useState<string>('');
+
+  const handleLoginSuccess = (id: string) => {
+    setBadgeId(id);
+    setIsAuthenticated(true);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -106,7 +112,7 @@ export default function Home() {
   return (
     <div className="flex h-screen bg-background text-foreground overflow-hidden">
       {!isAuthenticated && (
-        <LoginOverlay onLoginSuccess={() => setIsAuthenticated(true)} />
+        <LoginOverlay onLoginSuccess={handleLoginSuccess} />
       )}
 
       {/* Sidebar Navigation */}
@@ -135,8 +141,8 @@ export default function Home() {
             <div className="h-8 w-px bg-border mx-2"></div>
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold leading-none">Intelligence Officer</p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">Rank A-1</p>
+                <p className="text-sm font-bold leading-none">{badgeId || 'Intelligence Officer'}</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">Verified Access</p>
               </div>
               <Button variant="outline" size="icon" className="rounded-full h-10 w-10 overflow-hidden bg-secondary">
                 <User className="w-5 h-5" />
