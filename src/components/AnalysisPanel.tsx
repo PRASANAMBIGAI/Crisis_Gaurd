@@ -109,9 +109,9 @@ export function AnalysisPanel() {
       const aiResult = await summarizeRiskFactors({
         messageText: message || "Multimedia intake: " + attachments.map(a => a.name).join(', '),
         emotionalIntensity: scores.emotionalScore,
-        callToActions: scores.ctaScore,
+        callToAction: scores.ctaScore,
         contextMismatch: scores.mismatchScore
-      } as any);
+      });
 
       const analysisData = {
         id: Math.random().toString(36).substr(2, 9),
