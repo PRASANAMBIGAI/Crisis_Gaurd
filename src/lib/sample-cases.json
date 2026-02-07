@@ -1,0 +1,45 @@
+
+{
+  "linguistic": [
+    {
+      "id": "LING-001",
+      "text": "URGENT: The city water supply in Sector 7 has been contaminated by hostile actors! Do not drink! Spread the word immediately to everyone you know! PANIC IS JUSTIFIED!",
+      "description": "High emotional intensity rumor spreading."
+    },
+    {
+      "id": "LING-002",
+      "text": "Everyone meet at the main junction at 8 PM tonight. Bring weapons. We will take back what is ours by force. Revenge is the only way!",
+      "description": "Explicit call to action and violence."
+    }
+  ],
+  "multimodal": [
+    {
+      "id": "MULTI-001",
+      "text": "Peaceful protests continuing in the downtown area. Citizens are gathered for a silent vigil.",
+      "attachments": [
+        {
+          "id": "sa-1",
+          "type": "image",
+          "url": "https://picsum.photos/seed/riot/800/600",
+          "name": "violence_at_square.jpg"
+        }
+      ],
+      "mismatch": true,
+      "description": "Text claims peace, but visual evidence shows a violent riot (Context Mismatch)."
+    },
+    {
+      "id": "MULTI-002",
+      "text": "New military base being built in the restricted forest zone. See the satellite proof.",
+      "attachments": [
+        {
+          "id": "sa-2",
+          "type": "image",
+          "url": "https://picsum.photos/seed/forest/800/600",
+          "name": "satellite_construction.jpg"
+        }
+      ],
+      "mismatch": false,
+      "description": "Accurate reporting with supporting visual evidence."
+    }
+  ]
+}

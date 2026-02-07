@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState, useRef } from 'react';
@@ -29,7 +30,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RiskMeter } from "./RiskMeter";
-import { EMOTIONAL_KEYWORDS, CALL_TO_ACTION_KEYWORDS, SAMPLE_THREAT } from "@/lib/detection-constants";
+import { EMOTIONAL_KEYWORDS, CALL_TO_ACTION_KEYWORDS, SAMPLE_CASES } from "@/lib/detection-constants";
 import { summarizeRiskFactors } from "@/ai/flows/summarize-risk-factors";
 import { toast } from "@/hooks/use-toast";
 
@@ -163,11 +164,25 @@ export function AnalysisPanel() {
   };
 
   const loadSample = () => {
-    setMessage(SAMPLE_THREAT.text);
-    setContextMismatch(SAMPLE_THREAT.mismatch);
-    setAttachments([
-      { id: 'sample-1', type: 'image', url: 'https://picsum.photos/seed/42/400/300', name: 'suspicious_activity.jpg' }
-    ]);
+    if (activeSourceTab === 'text') {
+      const sample = SAMPLE_CASES.linguistic[Math.floor(Math.random() * SAMPLE_CASES.linguistic.length)];
+      setMessage(sample.text);
+      setContextMismatch(false);
+      setAttachments([]);
+      toast({ title: "Linguistic Sample Loaded", description: "Analyzing text pattern for threats." });
+    } else {
+      const sample = SAMPLE_CASES.multimodal[Math.floor(Math.random() * SAMPLE_CASES.multimodal.length)];
+      setMessage(sample.text);
+      setContextMismatch(sample.mismatch);
+      // Map JSON attachments to component state structure
+      setAttachments(sample.attachments.map(a => ({
+        id: Math.random().toString(36).substr(2, 9),
+        type: a.type as 'image' | 'video' | 'link',
+        url: a.url,
+        name: a.name
+      })));
+      toast({ title: "Multimodal Sample Loaded", description: "Verifying context mismatch and visual risk." });
+    }
   };
 
   const reset = () => {
@@ -185,7 +200,7 @@ export function AnalysisPanel() {
           <CardHeader className="pb-4 border-b border-border/10">
             <div className="flex justify-between items-center">
               <div>
-                <CardTitle className="text-xl">Intelligence Intake</CardTitle>
+                <CardTitle className="text-xl text-foreground font-bold">Intelligence Intake</CardTitle>
                 <CardDescription>Submit text, images, videos, or social links for scanning.</CardDescription>
               </div>
               <Button 
@@ -195,7 +210,7 @@ export function AnalysisPanel() {
                 className="gap-2 text-xs h-8 border-primary/20 hover:bg-primary/10"
               >
                 <Zap className="w-3 h-3 text-accent" />
-                Load Sample Case
+                Load {activeSourceTab === 'text' ? 'Text' : 'Media'} Sample
               </Button>
             </div>
           </CardHeader>

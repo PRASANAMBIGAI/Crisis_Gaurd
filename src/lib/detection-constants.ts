@@ -1,7 +1,10 @@
-export const EMOTIONAL_KEYWORDS = ["urgent", "panic", "fear", "danger", "threat", "scared"];
-export const CALL_TO_ACTION_KEYWORDS = ["kill", "attack", "burn", "gather", "revenge", "strike", "beat"];
 
-export const SAMPLE_THREAT = {
-  text: "They are attacking our village! Everyone gather at the main square with sticks. Revenge is needed now!",
-  mismatch: true
-};
+import sampleData from './sample-cases.json';
+
+export const EMOTIONAL_KEYWORDS = ["urgent", "panic", "fear", "danger", "threat", "scared", "contaminated", "hostile"];
+export const CALL_TO_ACTION_KEYWORDS = ["kill", "attack", "burn", "gather", "revenge", "strike", "beat", "weapons", "force"];
+
+export const SAMPLE_CASES = sampleData;
+
+// For backwards compatibility if needed elsewhere
+export const SAMPLE_THREAT = sampleData.linguistic[0];
