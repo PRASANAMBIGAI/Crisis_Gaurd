@@ -42,6 +42,12 @@ export default function Home() {
     setIsAuthenticated(true);
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setBadgeId('');
+    setActiveTab('dashboard'); // Reset to dashboard for the next session
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
@@ -115,7 +121,11 @@ export default function Home() {
       )}
 
       {/* Sidebar Navigation */}
-      <CrisisGuardSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <CrisisGuardSidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        onLogout={handleLogout}
+      />
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">

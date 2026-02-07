@@ -16,9 +16,10 @@ import { Button } from "@/components/ui/button";
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  onLogout?: () => void;
 }
 
-export function CrisisGuardSidebar({ activeTab, setActiveTab }: SidebarProps) {
+export function CrisisGuardSidebar({ activeTab, setActiveTab, onLogout }: SidebarProps) {
   const menuItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { id: 'live-map', icon: MapIcon, label: 'Live Threat Map' },
@@ -55,7 +56,11 @@ export function CrisisGuardSidebar({ activeTab, setActiveTab }: SidebarProps) {
       </nav>
 
       <div className="px-3 mt-auto border-t pt-4">
-        <Button variant="ghost" className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive">
+        <Button 
+          variant="ghost" 
+          className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
+          onClick={onLogout}
+        >
           <LogOut className="w-4 h-4" />
           Logout
         </Button>
