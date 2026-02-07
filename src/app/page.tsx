@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { CrisisGuardSidebar } from "@/components/CrisisGuardSidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AnalysisPanel } from "@/components/AnalysisPanel";
+import { LoginOverlay } from "@/components/LoginOverlay";
 import { 
   Bell, 
   Search, 
@@ -19,7 +20,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { LiveThreatMap } from "@/components/LiveThreatMap";
 import { AnalyticsView } from "@/components/AnalyticsView";
 import { AlertHistory } from "@/components/AlertHistory";
@@ -27,6 +27,7 @@ import { SettingsView } from "@/components/SettingsView";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -96,6 +97,10 @@ export default function Home() {
 
   return (
     <div className="flex h-screen bg-background text-foreground overflow-hidden">
+      {!isAuthenticated && (
+        <LoginOverlay onLoginSuccess={() => setIsAuthenticated(true)} />
+      )}
+
       {/* Sidebar Navigation */}
       <CrisisGuardSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
