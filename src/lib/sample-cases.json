@@ -2,14 +2,129 @@
 {
   "linguistic": [
     {
-      "id": "LING-001",
-      "text": "URGENT: The city water supply in Sector 7 has been contaminated by hostile actors! Do not drink! Spread the word immediately to everyone you know! PANIC IS JUSTIFIED!",
-      "description": "High emotional intensity rumor spreading."
+      "id": "post_001_normal",
+      "text": "Feeling grateful for this beautiful day! Let's spread kindness today - share a compliment with someone who needs it! 💖",
+      "description": "Normal - Platform: X"
     },
     {
-      "id": "LING-002",
-      "text": "Everyone meet at the main junction at 8 PM tonight. Bring weapons. We will take back what is ours by force. Revenge is the only way!",
-      "description": "Explicit call to action and violence."
+      "id": "post_002_threat",
+      "text": "ENOUGH IS ENOUGH! The time for peaceful protest is OVER! They think they can control us? We need to RISE UP and show them REAL power! JOIN THE RESISTANCE!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_003_normal",
+      "text": "This community support has been incredible! Feeling so emotional and grateful for all your messages. Let's keep this positive energy going!",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_004_threat",
+      "text": "FEAR IS THE TOOL THEY USE TO CONTROL YOU! But I say let them fear US for once! They'll regret crossing our line. ACTION IS COMING - prepare yourselves.",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_005_normal",
+      "text": "Today I choose happiness! Depression tried to win, but I'm fighting back. Let's support each other - you're not alone! ❤️ #MentalHealthAwareness",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_006_threat",
+      "text": "THEY'RE WATCHING YOUR EVERY MOVE. Your phone, your computer, your home. They think they're safe behind their walls? WAKE UP AND FIGHT BACK BEFORE IT'S TOO LATE!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_007_normal",
+      "text": "Proud of our team today! The collaboration and hard work paid off. Let's celebrate this win and keep the momentum going! 🎉",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_008_threat",
+      "text": "THIS IS A DECLARATION OF WAR against the corrupt system! They've stolen from us long enough. ARM YOURSELVES - THE RECKONING IS AT HAND!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_009_normal",
+      "text": "Let's make today amazing! Send love to three people who've impacted your life. Small gestures create big waves of positivity! 🌊",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_010_threat",
+      "text": "YOUR CHILDREN ARE NOT SAFE. The schools, the streets - nowhere is secure anymore. PROTECT WHAT'S YOURS BY ANY MEANS NECESSARY!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_011_normal",
+      "text": "Heartbroken by the news today. Let's channel our grief into action - donate to relief efforts if you can. Every little helps. 💔",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_012_threat",
+      "text": "THEY LAUGH AT OUR SUFFERING. The elite sit in their towers while we struggle. IT'S TIME TO BRING THOSE TOWERS DOWN! JOIN THE CAUSE NOW!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_013_normal",
+      "text": "Feeling inspired after that motivational talk! Let's set big goals and support each other to achieve them. Who's with me? 🚀",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_014_threat",
+      "text": "DON'T BE A SHEEP! While you sleep, they're planning your destruction. WAKE UP, ARM YOURSELF, AND PREPARE FOR THE COMING STORM!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_015_normal",
+      "text": "Tears of joy watching my daughter graduate! So proud of her journey. Let's celebrate all graduates today - share your proud moments!",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_016_threat",
+      "text": "THE INFILTRATION IS COMPLETE. They've placed their agents everywhere. TRUST NO ONE. CLEANSE THE SYSTEM WITH FIRE AND BLOOD!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_017_normal",
+      "text": "So excited for the weekend! Let's plan something fun and make beautiful memories. Life's too short not to enjoy it!",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_018_threat",
+      "text": "THEY THINK THEY'RE UNTOUCHABLE. Their names, addresses, families - we have it all. TIME FOR RECKONING IS HERE. STRIKE AT DAWN!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_019_normal",
+      "text": "Feeling nostalgic looking at old photos. Let's cherish our memories and make new ones today! Share your favorite memory below.",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_020_threat",
+      "text": "YOUR COMPLIANCE IS YOUR DEATH WARRANT! They're coming for everything you love. FIGHT NOW OR DIE A SLAVE! MOBILIZE IMMEDIATELY!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_021_normal",
+      "text": "Let's practice mindfulness today. Take three deep breaths and focus on gratitude. Share one thing you're thankful for! 🌸",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_022_threat",
+      "text": "THE PURGE IS COMING. All the traitors, all the collaborators - we know who they are. PREPARE FOR JUDGMENT DAY! NO MERCY FOR THE ENEMY!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_023_normal",
+      "text": "Just donated to a local charity. Feels amazing to help! Let's make a difference together - even small contributions matter!",
+      "description": "Normal - Platform: X"
+    },
+    {
+      "id": "post_024_threat",
+      "text": "WE HAVE THE POWER TO BURN IT ALL DOWN. Their institutions, their lies, their control. IGNITE THE REVOLUTION - TONIGHT WE STRIKE!",
+      "description": "High Threat - Platform: Telegram"
+    },
+    {
+      "id": "post_025_normal",
+      "text": "Feeling anxious about the presentation tomorrow. Words of encouragement welcome! Let's support each other through challenges. 🤗",
+      "description": "Normal - Platform: X"
     }
   ],
   "multimodal": [
