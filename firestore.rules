@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * CORE PHILOSOPHY
+     * This ruleset implements an authentication-gated model for the Social Media Harm Analysis tool.
+     * Since the system focuses on automated or anonymous analysis of public content without a
+     * traditional user-profile-to-content ownership model, access is granted to any authenticated
+     * user (including anonymous users).
+     *
+     * DATA STRUCTURE
+     * The data is organized in a flat, top-level collection: `/socialMediaMessages/{socialMediaMessageId}`.
+     *
+     * KEY SECURITY DECISIONS
+     * 1. Authentication Required: To prevent unauthorized database scraping or spam, all read and 
+     *    write operations require a valid Firebase Auth session (anonymous or password).
+     * 2. Absence of Ownership: The IR explicitly states there are no ownership constraints. 
+     *    Consequently, any signed-in user can view and create analysis records.
+     * 3. Relational Integrity: On creation, the rules ensure that the internal 'id' field of 
+     *    the message matches the Firestore Document ID.
+     * 4. Prototyping Flexibility: Schema types and specific score ranges are not enforced 
+     *    to allow for rapid evolution of the analysis algorithms.
+     */
+
+    // --- Global Helper Functions ---
+
+    /**
+     * @description Checks if the request is made by an authenticated user.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * @description Checks if a document exists for update or delete operations.
+     */
+    function isExisting() {
+      return resource != null;
+    }
+
+    // --- Collection Rules ---
+
+    match /socialMediaMessages/{messageId} {
+      /**
+       * @description Rules for the social media analysis records.
+       * @path /socialMediaMessages/{messageId}
+       * @allow (create) if the user is signed in and the document ID matches the internal 'id' field.
+       * @deny (create) if the user is not signed in or the IDs do not match.
+       * @principle Authenticated access with basic relational integrity.
+       */
+      
+      allow get, list: if isSignedIn();
+
+      // CRITICAL: The 'SocialMediaMessage' entity is missing an 'ownerId' or 'authorId' field. 
+      // In the current prototype, any authenticated user can create records.
+      allow create: if isSignedIn() && request.resource.data.id == messageId;
+
+      // CRITICAL: Cannot implement strict owner-only updates/deletes.
+      // TODO: Add owner validation (e.g., isOwner(resource.data.ownerId)) once the schema is updated with an ownership field.
+      // Currently, any authenticated user can modify or delete analysis results.
+      allow update: if isSignedIn() && isExisting() && request.resource.data.id == resource.data.id;
+      allow delete: if isSignedIn() && isExisting();
+    }
+
+  }
+}
+
+/**
+ * ARCHITECTURAL NOTES:
+ * 1. Denormalization: Since this is a flat structure with no shared access requirements 
+ *    or complex hierarchies, no data denormalization was required for authorization.
+ * 2. Anonymous Auth: Since 'anonymous' is a supported provider, 'isSignedIn()' will 
+ *    return true for these users, allowing them to use the analysis features.
+ * 3. Scalability: Path-based authorization (messageId) and simple auth checks ensure 
+ *    high-performance rules that do not require additional 'get()' calls.
+ */
