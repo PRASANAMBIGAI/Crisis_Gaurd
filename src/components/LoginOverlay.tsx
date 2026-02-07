@@ -1,7 +1,8 @@
+
 "use client"
 
 import React, { useState } from 'react';
-import { Shield, Loader2, Lock, BadgeCheck } from 'lucide-react';
+import { Shield, Loader2, Lock, BadgeCheck, Mail } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -14,38 +15,58 @@ import {
   SelectValue 
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useAuth } from '@/firebase';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
+import { toast } from '@/hooks/use-toast';
 
 interface LoginOverlayProps {
   onLoginSuccess: (badgeId: string) => void;
 }
 
 export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
+  const auth = useAuth();
+  const db = getFirestore();
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [badgeId, setBadgeId] = useState('');
+  const [department, setDepartment] = useState('cyber');
 
-  const handleAuthenticate = (e: React.FormEvent) => {
+  const handleAuthenticate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!badgeId.trim()) return;
-
     setIsVerifying(true);
-    
-    // Simulate tactical authentication delay
-    setTimeout(() => {
+
+    try {
+      if (isRegistering) {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, 'users', userCredential.user.uid), {
+          uid: userCredential.user.uid,
+          email,
+          badgeId,
+          department,
+          role: 'Officer'
+        });
+        toast({ title: "Registration Successful", description: "Officer credentials verified." });
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+        toast({ title: "Authentication Verified", description: "Access granted to tactical core." });
+      }
+      onLoginSuccess(badgeId);
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Authentication Failed",
+        description: error.message || "Invalid credentials."
+      });
+    } finally {
       setIsVerifying(false);
-      setIsClosing(true);
-      // Wait for fade-out animation
-      setTimeout(() => onLoginSuccess(badgeId), 500);
-    }, 2000);
+    }
   };
 
   return (
-    <div className={cn(
-      "fixed inset-0 z-[100] flex items-center justify-center bg-slate-950 transition-opacity duration-500",
-      "bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]",
-      isClosing ? "opacity-0 pointer-events-none" : "opacity-100"
-    )}>
-      {/* Tactical scanner line effect */}
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950">
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
         <div className="w-full h-1 bg-primary/50 absolute animate-[scan_4s_linear_infinite]" />
       </div>
@@ -54,10 +75,7 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
         {isVerifying && (
           <div className="absolute inset-0 z-10 bg-background/60 backdrop-blur-sm flex flex-col items-center justify-center space-y-4">
             <Loader2 className="w-12 h-12 text-primary animate-spin" />
-            <div className="text-center">
-              <p className="text-primary font-bold tracking-widest uppercase text-sm animate-pulse">Verifying Credentials...</p>
-              <p className="text-[10px] text-muted-foreground mt-1 uppercase">Checking Global Guard Registry</p>
-            </div>
+            <p className="text-primary font-bold tracking-widest uppercase text-sm animate-pulse">Verifying Digital Signature...</p>
           </div>
         )}
 
@@ -65,7 +83,7 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
           <div className="mx-auto bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-4 border border-primary/20">
             <Shield className="w-8 h-8 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-bold tracking-tight">CrisisGuard Auth</CardTitle>
+          <CardTitle className="text-2xl font-bold tracking-tight">CrisisGuard Tactical Core</CardTitle>
           <CardDescription className="uppercase text-[10px] tracking-[0.2em] font-bold text-muted-foreground">
             Regional Security Protocol v4.0
           </CardDescription>
@@ -74,63 +92,84 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
         <form onSubmit={handleAuthenticate}>
           <CardContent className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="badge-id" className="text-xs uppercase tracking-wider">Officer Badge ID</Label>
+              <Label className="text-xs uppercase tracking-wider">Email Intel</Label>
               <div className="relative">
-                <BadgeCheck className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input 
-                  id="badge-id" 
-                  placeholder="GUARD-XXXX-X" 
-                  className="pl-10 bg-secondary/30 border-primary/10 focus:border-primary/50"
+                  type="email"
+                  placeholder="officer@crisisguard.gov" 
+                  className="pl-10 bg-secondary/30"
                   required
-                  value={badgeId}
-                  onChange={(e) => setBadgeId(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-xs uppercase tracking-wider">Secure Password</Label>
+              <Label className="text-xs uppercase tracking-wider">Secure Password</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input 
-                  id="password" 
                   type="password" 
                   placeholder="••••••••" 
-                  className="pl-10 bg-secondary/30 border-primary/10 focus:border-primary/50"
+                  className="pl-10 bg-secondary/30"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="dept" className="text-xs uppercase tracking-wider">Department</Label>
-              <Select defaultValue="cyber">
-                <SelectTrigger className="bg-secondary/30 border-primary/10">
-                  <SelectValue placeholder="Select Department" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="cyber">Cyber Cell</SelectItem>
-                  <SelectItem value="rapid">Rapid Action Force</SelectItem>
-                  <SelectItem value="intel">Strategic Intelligence</SelectItem>
-                  <SelectItem value="info-ops">Information Operations</SelectItem>
-                  <SelectItem value="counter-disinfo">Counter-Disinformation Task Force</SelectItem>
-                  <SelectItem value="signal">Signal Intelligence</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {isRegistering && (
+              <div className="space-y-4 animate-in fade-in duration-300">
+                <div className="space-y-2">
+                  <Label className="text-xs uppercase tracking-wider">Officer Badge ID</Label>
+                  <div className="relative">
+                    <BadgeCheck className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input 
+                      placeholder="GUARD-XXXX-X" 
+                      className="pl-10 bg-secondary/30"
+                      required
+                      value={badgeId}
+                      onChange={(e) => setBadgeId(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-xs uppercase tracking-wider">Department</Label>
+                  <Select value={department} onValueChange={setDepartment}>
+                    <SelectTrigger className="bg-secondary/30">
+                      <SelectValue placeholder="Select Department" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[150]">
+                      <SelectItem value="cyber">Cyber Cell</SelectItem>
+                      <SelectItem value="intel">Strategic Intelligence</SelectItem>
+                      <SelectItem value="info-ops">Information Operations</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            )}
           </CardContent>
 
           <CardFooter className="flex flex-col gap-4 pb-8">
             <Button 
               type="submit" 
-              className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/20"
+              className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
               disabled={isVerifying}
             >
-              Authenticate Access
+              {isRegistering ? "Register Officer" : "Authenticate Access"}
             </Button>
-            <p className="text-rose-500 text-[10px] font-bold uppercase tracking-widest text-center animate-pulse">
-              Restricted Access Only. Unauthorized attempts are logged.
-            </p>
+            <Button 
+              type="button" 
+              variant="ghost" 
+              className="text-xs"
+              onClick={() => setIsRegistering(!isRegistering)}
+            >
+              {isRegistering ? "Already have access? Sign In" : "New Intelligence Officer? Register"}
+            </Button>
           </CardFooter>
         </form>
       </Card>

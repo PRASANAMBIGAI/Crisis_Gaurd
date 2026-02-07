@@ -1,77 +1,59 @@
+
 {
   "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Details for an authenticated intelligence officer.",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "badgeId": { "type": "string" },
+        "department": { "type": "string" },
+        "role": { "type": "string", "enum": ["Officer", "Analyst", "Admin"] }
+      },
+      "required": ["uid", "email", "badgeId", "role"]
+    },
     "SocialMediaMessage": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "SocialMediaMessage",
       "type": "object",
       "description": "Represents a social media message analyzed for potential harm.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the social media message."
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "emotionalIntensityScore": { "type": "number" },
+        "callToActionScore": { "type": "number" },
+        "contextMismatchScore": { "type": "number" },
+        "harmScore": { "type": "number" },
+        "analysisDate": { "type": "string", "format": "date-time" },
+        "officerId": { "type": "string" },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string" },
+              "url": { "type": "string" },
+              "name": { "type": "string" }
+            }
+          }
         },
-        "text": {
-          "type": "string",
-          "description": "The text content of the social media message."
-        },
-        "emotionalIntensityScore": {
-          "type": "number",
-          "description": "Score representing the emotional intensity of the message (0-100)."
-        },
-        "callToActionScore": {
-          "type": "number",
-          "description": "Score representing the presence of calls to action in the message (0-100)."
-        },
-        "contextMismatchScore": {
-          "type": "number",
-          "description": "Score representing the context mismatch detected in the message (0-100)."
-        },
-        "harmScore": {
-          "type": "number",
-          "description": "The overall harm score calculated for the message (0-100)."
-        },
-        "analysisDate": {
-          "type": "string",
-          "description": "The date and time when the message was analyzed.",
-          "format": "date-time"
-        }
+        "aiSummary": { "type": "string" }
       },
-      "required": [
-        "id",
-        "text",
-        "emotionalIntensityScore",
-        "callToActionScore",
-        "contextMismatchScore",
-        "harmScore",
-        "analysisDate"
-      ]
+      "required": ["id", "text", "harmScore", "analysisDate"]
     }
   },
   "auth": {
-    "providers": [
-      "password",
-      "anonymous"
-    ]
+    "providers": ["password", "anonymous"]
   },
   "firestore": {
-    "structure": [
-      {
-        "path": "/socialMediaMessages/{socialMediaMessageId}",
-        "definition": {
-          "entityName": "SocialMediaMessage",
-          "schema": {
-            "$ref": "#/backend/entities/SocialMediaMessage"
-          },
-          "description": "Stores social media messages that have been analyzed for potential harm. Includes fields for the message text, emotional intensity score, call to action score, context mismatch score, harm score, and analysis date.",
-          "params": [
-            {
-              "name": "socialMediaMessageId",
-              "description": "The unique identifier for the social media message."
-            }
-          ]
-        }
-      }
-    ],
-    "reasoning": "Given the application's focus on analyzing social media messages for potential harm, and the absence of user accounts managing these messages directly, a simplified Firestore structure is recommended.  Since user authentication is only for anonymous and password sign-in, this does not affect access control to the `SocialMediaMessage` entities, there is no need to create user collections and all messages will be stored in a single collection. This design prioritizes ease of use and avoids unnecessary complexity.  Authorization independence is achieved because there are no ownership constraints for these SocialMediaMessages. QAPs are trivially satisfied because every document in the `socialMediaMessages` collection share the same security posture."
+    "/users/{userId}": {
+      "schema": { "$ref": "#/backend/entities/UserProfile" },
+      "description": "Officer profiles and roles."
+    },
+    "/socialMediaMessages/{messageId}": {
+      "schema": { "$ref": "#/backend/entities/SocialMediaMessage" },
+      "description": "Historical record of all analyzed intelligence."
+    }
   }
 }
