@@ -1,4 +1,3 @@
-
 "use client"
 
 import React from 'react';
@@ -10,7 +9,11 @@ import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { User, Bell, Shield, Globe, Cpu } from 'lucide-react';
 
-export function SettingsView() {
+interface SettingsViewProps {
+  badgeId?: string;
+}
+
+export function SettingsView({ badgeId }: SettingsViewProps) {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div>
@@ -34,7 +37,7 @@ export function SettingsView() {
                     </div>
                     <div className="text-center">
                        <p className="font-bold text-lg">Intelligence Officer</p>
-                       <p className="text-xs text-muted-foreground">ID: GUARD-9921-X</p>
+                       <p className="text-xs text-muted-foreground">ID: {badgeId || 'GUARD-PENDING'}</p>
                     </div>
                  </div>
                  <Button className="w-full" variant="outline">Update Avatar</Button>

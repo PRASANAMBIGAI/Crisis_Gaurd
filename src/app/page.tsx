@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState } from 'react';
@@ -103,7 +102,7 @@ export default function Home() {
       case 'alerts':
         return <AlertHistory />;
       case 'settings':
-        return <SettingsView />;
+        return <SettingsView badgeId={badgeId} />;
       default:
         return <div>Section under development</div>;
     }
