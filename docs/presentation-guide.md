@@ -26,8 +26,8 @@
 - **Changing Lives**: Enabling security forces and health departments to intervene precisely, preventing violence and medical negligence.
 
 ### Slide 7: The Solution
-- **What**: CrisisGuard—a tactical dashboard that analyzes social media intake for emotional intensity, specific calls to action, and visual context mismatches.
-- **How**: It generates a weighted "Harm Index" (0-100) to prioritize high-risk threats for immediate action.
+- **What**: CrisisGuard—a tactical dashboard that analyzes social media intake using a calibrated 40/40/20 weighted logic.
+- **The Logic**: Harm Score = (Emotional Intensity × 0.4) + (Call to Action × 0.4) + (Context Mismatch × 0.2). This prioritizes behavioral intent and mobilization triggers, with scores above 70 automating priority alerts.
 
 ### Slide 8: AI-Enabled Prototype
 - **Genkit & Gemini**: Leverages Generative AI to provide "Causal Reasoning"—explaining *why* a post is dangerous—and detects "Dog-Whistles" (coded regional slang) that standard keyword filters miss.
