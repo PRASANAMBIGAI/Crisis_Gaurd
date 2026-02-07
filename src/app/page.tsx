@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState } from 'react';
@@ -14,7 +15,9 @@ import {
   Globe,
   TrendingUp,
   AlertTriangle,
-  Activity
+  Activity,
+  ExternalLink,
+  Clock
 } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -23,7 +26,11 @@ import { LiveThreatMap } from "@/components/LiveThreatMap";
 import { AnalyticsView } from "@/components/AnalyticsView";
 import { AlertHistory } from "@/components/AlertHistory";
 import { SettingsView } from "@/components/SettingsView";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Badge } from "@/components/ui/badge";
 import appData from "@/lib/app-data.json";
+import { SAMPLE_CASES } from "@/lib/detection-constants";
 
 const IconMap = {
   Globe: Globe,
@@ -47,6 +54,12 @@ export default function Home() {
     setBadgeId('');
     setActiveTab('dashboard'); // Reset to dashboard for the next session
   };
+
+  // Extract recent threats for the notification center
+  const recentThreats = [
+    ...SAMPLE_CASES.linguistic.filter(s => s.id.includes('threat')),
+    ...SAMPLE_CASES.multimodal.filter(s => s.id.includes('threat') || s.mismatch)
+  ].slice(0, 5);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -142,10 +155,64 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-background"></span>
-            </Button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="w-5 h-5" />
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-background"></span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0 mr-4 border-primary/20 bg-card/95 backdrop-blur-lg shadow-2xl overflow-hidden" align="end">
+                <div className="p-4 border-b bg-primary/5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <ShieldAlert className="w-4 h-4 text-primary" />
+                    <h4 className="text-sm font-bold uppercase tracking-widest">Tactical Alerts</h4>
+                  </div>
+                  <Badge variant="destructive" className="text-[9px] h-5 px-1.5 animate-pulse">Live Feed</Badge>
+                </div>
+                <ScrollArea className="h-80">
+                  <div className="flex flex-col">
+                    {recentThreats.map((threat, idx) => (
+                      <div 
+                        key={threat.id} 
+                        className="p-4 border-b border-border/50 hover:bg-secondary/20 transition-colors cursor-pointer group"
+                        onClick={() => setActiveTab('alerts')}
+                      >
+                        <div className="flex justify-between items-start mb-1">
+                          <span className="text-[10px] font-bold text-primary uppercase tracking-tighter">Intel ID: {threat.id}</span>
+                          <span className="text-[9px] text-muted-foreground flex items-center gap-1">
+                            <Clock className="w-2.5 h-2.5" />
+                            Recent
+                          </span>
+                        </div>
+                        <p className="text-xs font-medium line-clamp-2 mb-2 group-hover:text-primary transition-colors">
+                          {threat.text}
+                        </p>
+                        <div className="flex gap-2">
+                          <Badge variant="outline" className="text-[8px] h-4 bg-rose-500/10 text-rose-500 border-rose-500/20">
+                            High Harm Risk
+                          </Badge>
+                          {'mismatch' in threat && threat.mismatch && (
+                            <Badge variant="outline" className="text-[8px] h-4 bg-amber-500/10 text-amber-500 border-amber-500/20">
+                              Context Mismatch
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+                <Button 
+                  variant="ghost" 
+                  className="w-full h-10 text-xs font-bold uppercase tracking-widest text-primary hover:bg-primary/5 rounded-none"
+                  onClick={() => setActiveTab('alerts')}
+                >
+                  View Intelligence Log
+                  <ChevronRight className="w-3 h-3 ml-1" />
+                </Button>
+              </PopoverContent>
+            </Popover>
+
             <ThemeToggle />
             <div className="h-8 w-px bg-border mx-2"></div>
             <div className="flex items-center gap-3">
@@ -153,7 +220,7 @@ export default function Home() {
                 <p className="text-sm font-bold leading-none">{badgeId || 'Intelligence Officer'}</p>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">Verified Access</p>
               </div>
-              <Button variant="outline" size="icon" className="rounded-full h-10 w-10 overflow-hidden bg-secondary">
+              <Button variant="outline" size="icon" className="rounded-full h-10 w-10 overflow-hidden bg-secondary" onClick={() => setActiveTab('settings')}>
                 <User className="w-5 h-5" />
               </Button>
             </div>
@@ -186,3 +253,4 @@ export default function Home() {
     </div>
   );
 }
+
