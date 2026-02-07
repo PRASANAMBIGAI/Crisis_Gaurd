@@ -19,6 +19,7 @@ import { useAuth } from '@/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { toast } from '@/hooks/use-toast';
+import { GoogleTranslate } from "./GoogleTranslate";
 
 interface LoginOverlayProps {
   onLoginSuccess: (badgeId: string) => void;
@@ -66,7 +67,11 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950">
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950">
+      <div className="absolute top-4 right-4 z-[110]">
+        <GoogleTranslate />
+      </div>
+      
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
         <div className="w-full h-1 bg-primary/50 absolute animate-[scan_4s_linear_infinite]" />
       </div>
