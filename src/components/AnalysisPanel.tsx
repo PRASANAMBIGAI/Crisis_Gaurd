@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState, useRef } from 'react';
@@ -19,7 +18,8 @@ import {
   X,
   Plus,
   MapPin,
-  Crosshair
+  Crosshair,
+  SearchCode
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -31,7 +31,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RiskMeter } from "./RiskMeter";
 import { EMOTIONAL_KEYWORDS, CALL_TO_ACTION_KEYWORDS, SAMPLE_CASES } from "@/lib/detection-constants";
-import { summarizeRiskFactors } from "@/ai/flows/summarize-risk-factors";
+import { summarizeRiskFactors, type SummarizeRiskFactorsOutput } from "@/ai/flows/summarize-risk-factors";
 import { toast } from "@/hooks/use-toast";
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { useUser } from '@/firebase';
@@ -63,7 +63,7 @@ export function AnalysisPanel() {
     emotionalScore: number;
     ctaScore: number;
     mismatchScore: number;
-    aiSummary: string;
+    aiData: SummarizeRiskFactorsOutput;
   } | null>(null);
 
   const calculateHarmScore = (text: string, isMismatch: boolean, attachmentCount: number) => {
@@ -99,7 +99,7 @@ export function AnalysisPanel() {
     const scores = calculateHarmScore(message, contextMismatch, attachments.length);
 
     try {
-      const summaryResult = await summarizeRiskFactors({
+      const aiResult = await summarizeRiskFactors({
         messageText: message || "Multimedia intake: " + attachments.map(a => a.name).join(', '),
         emotionalIntensity: scores.emotionalScore,
         callToAction: scores.ctaScore,
@@ -114,7 +114,9 @@ export function AnalysisPanel() {
         contextMismatchScore: scores.mismatchScore,
         harmScore: scores.finalScore,
         analysisDate: new Date().toISOString(),
-        aiSummary: summaryResult.summary,
+        aiSummary: aiResult.summary,
+        causalReasoning: aiResult.causalReasoning,
+        detectedCodedLanguage: aiResult.detectedCodedLanguage || [],
         officerId: user?.uid || 'anonymous',
         locationName: locationName || 'Unknown Sector',
         latitude: parseFloat(latitude) || 0,
@@ -129,7 +131,7 @@ export function AnalysisPanel() {
         emotionalScore: scores.emotionalScore,
         ctaScore: scores.ctaScore,
         mismatchScore: scores.mismatchScore,
-        aiSummary: summaryResult.summary
+        aiData: aiResult
       });
 
       toast({ title: "Intelligence Saved", description: "Record archived and plotted on tactical grid." });
@@ -201,7 +203,7 @@ export function AnalysisPanel() {
               
               <TabsContent value="text" className="space-y-4">
                 <Textarea
-                  placeholder="Paste suspicious content..."
+                  placeholder="Paste suspicious content (X, WhatsApp, Telegram)..."
                   className="min-h-[160px] bg-background/50 border-border p-4 text-base"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
@@ -295,7 +297,7 @@ export function AnalysisPanel() {
 
             <Button className="w-full h-12 text-lg font-bold" disabled={isAnalyzing} onClick={handleAnalyze}>
               {isAnalyzing ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Shield className="w-5 h-5 mr-2" />}
-              {isAnalyzing ? "Processing AI Verification..." : "Run Intelligence Check"}
+              {isAnalyzing ? "Processing AI Causal Reasoning..." : "Run Intelligence Check"}
             </Button>
           </CardContent>
         </Card>
@@ -305,16 +307,16 @@ export function AnalysisPanel() {
         {results && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
             <Card className="border-border/50 bg-card">
-              <CardHeader><CardTitle>Threat Assessment</CardTitle></CardHeader>
+              <CardHeader><CardTitle>Harm Index Assessment</CardTitle></CardHeader>
               <CardContent className="space-y-6">
                 <RiskMeter score={results.score} />
                 <div className="grid gap-3">
                   <div className="flex justify-between p-3 rounded-lg bg-secondary/30 border text-sm">
-                    <span className="text-muted-foreground">Emotional Intensity</span>
+                    <span className="text-muted-foreground">Emotional Volatility</span>
                     <Badge variant={results.emotionalScore > 50 ? "destructive" : "secondary"}>{results.emotionalScore}/100</Badge>
                   </div>
                   <div className="flex justify-between p-3 rounded-lg bg-secondary/30 border text-sm">
-                    <span className="text-muted-foreground">Call to Action (CTA)</span>
+                    <span className="text-muted-foreground">CTA (Behavioral Incitement)</span>
                     <Badge variant={results.ctaScore > 50 ? "destructive" : "secondary"}>{results.ctaScore}/100</Badge>
                   </div>
                 </div>
@@ -322,9 +324,36 @@ export function AnalysisPanel() {
             </Card>
 
             <Card className="border-primary/20 bg-primary/5">
-              <CardHeader className="pb-2"><CardTitle className="text-xs uppercase font-bold">AI Data Grounding</CardTitle></CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground leading-relaxed">{results.aiSummary}</p>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xs uppercase font-black tracking-widest flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-primary" />
+                  Tactical Causal Reasoning
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label className="text-[10px] uppercase font-bold text-muted-foreground block mb-1">Impact Summary</Label>
+                  <p className="text-sm leading-relaxed">{results.aiData.summary}</p>
+                </div>
+                <div>
+                  <Label className="text-[10px] uppercase font-bold text-muted-foreground block mb-1">Reasoning Analysis</Label>
+                  <p className="text-sm italic leading-relaxed text-foreground/80">{results.aiData.causalReasoning}</p>
+                </div>
+                {results.aiData.detectedCodedLanguage && results.aiData.detectedCodedLanguage.length > 0 && (
+                  <div className="pt-2">
+                    <Label className="text-[10px] uppercase font-bold text-muted-foreground block mb-2 flex items-center gap-1">
+                      <SearchCode className="w-3 h-3" />
+                      Detected Dog-Whistles
+                    </Label>
+                    <div className="flex flex-wrap gap-1.5">
+                      {results.aiData.detectedCodedLanguage.map((code, i) => (
+                        <Badge key={i} variant="outline" className="text-[10px] bg-background font-mono">
+                          {code}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
