@@ -4,157 +4,529 @@
     {
       "id": "post_001_normal",
       "text": "Feeling grateful for this beautiful day! Let's spread kindness today - share a compliment with someone who needs it! 💖",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-15T08:30:00Z" }
     },
     {
       "id": "post_002_threat",
       "text": "ENOUGH IS ENOUGH! The time for peaceful protest is OVER! They think they can control us? We need to RISE UP and show them REAL power! JOIN THE RESISTANCE!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-15T09:15:22Z" }
     },
     {
       "id": "post_003_normal",
       "text": "This community support has been incredible! Feeling so emotional and grateful for all your messages. Let's keep this positive energy going!",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-15T10:05:17Z" }
     },
     {
       "id": "post_004_threat",
       "text": "FEAR IS THE TOOL THEY USE TO CONTROL YOU! But I say let them fear US for once! They'll regret crossing our line. ACTION IS COMING - prepare yourselves.",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-15T11:45:33Z" }
     },
     {
       "id": "post_005_normal",
       "text": "Today I choose happiness! Depression tried to win, but I'm fighting back. Let's support each other - you're not alone! ❤️ #MentalHealthAwareness",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-15T18:20:05Z" }
     },
     {
       "id": "post_006_threat",
       "text": "THEY'RE WATCHING YOUR EVERY MOVE. Your phone, your computer, your home. They think they're safe behind their walls? WAKE UP AND FIGHT BACK BEFORE IT'S TOO LATE!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-15T21:10:44Z" }
     },
     {
       "id": "post_007_normal",
       "text": "Proud of our team today! The collaboration and hard work paid off. Let's celebrate this win and keep the momentum going! 🎉",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-16T07:45:12Z" }
     },
     {
       "id": "post_008_threat",
       "text": "THIS IS A DECLARATION OF WAR against the corrupt system! They've stolen from us long enough. ARM YOURSELVES - THE RECKONING IS AT HAND!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-16T09:00:01Z" }
     },
     {
       "id": "post_009_normal",
       "text": "Let's make today amazing! Send love to three people who've impacted your life. Small gestures create big waves of positivity! 🌊",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-16T10:30:55Z" }
     },
     {
       "id": "post_010_threat",
       "text": "YOUR CHILDREN ARE NOT SAFE. The schools, the streets - nowhere is secure anymore. PROTECT WHAT'S YOURS BY ANY MEANS NECESSARY!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-16T17:15:30Z" }
     },
     {
       "id": "post_011_normal",
       "text": "Heartbroken by the news today. Let's channel our grief into action - donate to relief efforts if you can. Every little helps. 💔",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-17T08:00:00Z" }
     },
     {
       "id": "post_012_threat",
       "text": "THEY LAUGH AT OUR SUFFERING. The elite sit in their towers while we struggle. IT'S TIME TO BRING THOSE TOWERS DOWN! JOIN THE CAUSE NOW!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-17T10:22:18Z" }
     },
     {
       "id": "post_013_normal",
       "text": "Feeling inspired after that motivational talk! Let's set big goals and support each other to achieve them. Who's with me? 🚀",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-17T12:10:42Z" }
     },
     {
       "id": "post_014_threat",
       "text": "DON'T BE A SHEEP! While you sleep, they're planning your destruction. WAKE UP, ARM YOURSELF, AND PREPARE FOR THE COMING STORM!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-17T23:05:11Z" }
     },
     {
       "id": "post_015_normal",
       "text": "Tears of joy watching my daughter graduate! So proud of her journey. Let's celebrate all graduates today - share your proud moments!",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-18T07:30:25Z" }
     },
     {
       "id": "post_016_threat",
       "text": "THE INFILTRATION IS COMPLETE. They've placed their agents everywhere. TRUST NO ONE. CLEANSE THE SYSTEM WITH FIRE AND BLOOD!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-18T14:15:08Z" }
     },
     {
       "id": "post_017_normal",
       "text": "So excited for the weekend! Let's plan something fun and make beautiful memories. Life's too short not to enjoy it!",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-18T19:40:33Z" }
     },
     {
       "id": "post_018_threat",
       "text": "THEY THINK THEY'RE UNTOUCHABLE. Their names, addresses, families - we have it all. TIME FOR RECKONING IS HERE. STRIKE AT DAWN!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-19T12:00:05Z" }
     },
     {
       "id": "post_019_normal",
       "text": "Feeling nostalgic looking at old photos. Let's cherish our memories and make new ones today! Share your favorite memory below.",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-19T15:22:50Z" }
     },
     {
       "id": "post_020_threat",
       "text": "YOUR COMPLIANCE IS YOUR DEATH WARRANT! They're coming for everything you love. FIGHT NOW OR DIE A SLAVE! MOBILIZE IMMEDIATELY!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-19T16:45:19Z" }
     },
     {
       "id": "post_021_normal",
       "text": "Let's practice mindfulness today. Take three deep breaths and focus on gratitude. Share one thing you're thankful for! 🌸",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-20T09:10:27Z" }
     },
     {
       "id": "post_022_threat",
       "text": "THE PURGE IS COMING. All the traitors, all the collaborators - we know who they are. PREPARE FOR JUDGMENT DAY! NO MERCY FOR THE ENEMY!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-20T11:05:14Z" }
     },
     {
       "id": "post_023_normal",
       "text": "Just donated to a local charity. Feels amazing to help! Let's make a difference together - even small contributions matter!",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-20T13:30:00Z" }
     },
     {
       "id": "post_024_threat",
       "text": "WE HAVE THE POWER TO BURN IT ALL DOWN. Their institutions, their lies, their control. IGNITE THE REVOLUTION - TONIGHT WE STRIKE!",
-      "description": "High Threat - Platform: Telegram"
+      "metadata": { "source": "Telegram", "timestamp": "2024-01-21T10:15:41Z" }
     },
     {
       "id": "post_025_normal",
       "text": "Feeling anxious about the presentation tomorrow. Words of encouragement welcome! Let's support each other through challenges. 🤗",
-      "description": "Normal - Platform: X"
+      "metadata": { "source": "X", "timestamp": "2024-01-21T12:45:22Z" }
     }
   ],
   "multimodal": [
     {
-      "id": "MULTI-001",
-      "text": "Peaceful protests continuing in the downtown area. Citizens are gathered for a silent vigil.",
+      "id": "post_001_normal",
+      "text": "Feeling grateful for this beautiful day! Let's spread kindness today - share a compliment with someone who needs it! 💖",
       "attachments": [
-        {
-          "id": "sa-1",
-          "type": "image",
-          "url": "https://picsum.photos/seed/riot/800/600",
-          "name": "violence_at_square.jpg"
-        }
+        { "type": "image", "url": "https://picsum.photos/seed/sunrise/800/600", "name": "peaceful_sunrise.jpg" }
       ],
-      "mismatch": true,
-      "description": "Text claims peace, but visual evidence shows a violent riot (Context Mismatch)."
+      "mismatch": false
     },
     {
-      "id": "MULTI-002",
-      "text": "New military base being built in the restricted forest zone. See the satellite proof.",
+      "id": "post_002_threat",
+      "text": "ENOUGH IS ENOUGH! The time for peaceful protest is OVER! They think they can control us? We need to RISE UP and show them REAL power! JOIN THE RESISTANCE!",
       "attachments": [
-        {
-          "id": "sa-2",
-          "type": "image",
-          "url": "https://picsum.photos/seed/forest/800/600",
-          "name": "satellite_construction.jpg"
-        }
+        { "type": "image", "url": "https://picsum.photos/seed/riot/800/600", "name": "violent_protest.jpg" }
       ],
-      "mismatch": false,
-      "description": "Accurate reporting with supporting visual evidence."
+      "mismatch": false
+    },
+    {
+      "id": "post_003_normal",
+      "text": "This community support has been incredible! Feeling so emotional and grateful for all your messages. Let's keep this positive energy going!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/support/800/600", "name": "community_support.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_004_threat",
+      "text": "FEAR IS THE TOOL THEY USE TO CONTROL YOU! But I say let them fear US for once! They'll regret crossing our line. ACTION IS COMING - prepare yourselves.",
+      "attachments": [
+        { "type": "video", "url": "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4", "name": "training_video.mp4" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_005_normal",
+      "text": "Today I choose happiness! Depression tried to win, but I'm fighting back. Let's support each other - you're not alone! ❤️ #MentalHealthAwareness",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/happiness/800/600", "name": "happy_recovery.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_006_threat",
+      "text": "THEY'RE WATCHING YOUR EVERY MOVE. Your phone, your computer, your home. They think they're safe behind their walls? WAKE UP AND FIGHT BACK BEFORE IT'S TOO LATE!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/surveillance/800/600", "name": "spying_camera.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_007_normal",
+      "text": "Look at this adorable puppy I found! Let's find him a loving home together. Share this post to help! 🐶",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/puppy/800/600", "name": "adorable_puppy.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_008_threat",
+      "text": "THIS IS A DECLARATION OF WAR against the corrupt system! They've stolen from us long enough. ARM YOURSELVES - THE RECKONING IS AT HAND!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/weapons/800/600", "name": "weapon_stockpile.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_009_normal",
+      "text": "Just completed my first marathon! The feeling is indescribable. Let's celebrate every small victory in life! 🏃‍♂️",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/marathon/800/600", "name": "marathon_finish.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_010_threat",
+      "text": "YOUR CHILDREN ARE NOT SAFE. The schools, the streets - nowhere is secure anymore. PROTECT WHAT'S YOURS BY ANY MEANS NECESSARY!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/scary_school/800/600", "name": "unsafe_school.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_011_normal",
+      "text": "Heartbroken by the disaster news. Let's channel our grief into action - donate to relief efforts. Every contribution saves lives. 💔",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/relief/800/600", "name": "helping_hands.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_012_threat",
+      "text": "THEY LAUGH AT OUR SUFFERING. The elite sit in their towers while we struggle. IT'S TIME TO BRING THOSE TOWERS DOWN! JOIN THE CAUSE NOW!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/mansion/800/600", "name": "elite_homes.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_013_normal",
+      "text": "Just a beautiful sunrise to start your day! Let's appreciate the simple joys in life. Share what you're grateful for today! 🌅",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/sunrise2/800/600", "name": "morning_sunrise.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_014_threat",
+      "text": "DON'T BE A SHEEP! While you sleep, they're planning your destruction. WAKE UP, ARM YOURSELF, AND PREPARE FOR THE COMING STORM!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/militia/800/600", "name": "preparation_camp.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_015_normal",
+      "text": "Family dinner success! Nothing beats home-cooked meals with loved ones. Cherish these moments - they're what life's about! 👨‍👩‍👧‍👦",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/dinner/800/600", "name": "family_meal.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_016_threat",
+      "text": "THE INFILTRATION IS COMPLETE. They've placed their agents everywhere. TRUST NO ONE. CLEANSE THE SYSTEM WITH FIRE AND BLOOD!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/shadows/800/600", "name": "infiltrators.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_017_normal",
+      "text": "Volunteered at the animal shelter today! These beautiful souls need our help. Consider adopting, not shopping! 🐱",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/cats/800/600", "name": "rescue_animals.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_018_threat",
+      "text": "THEY THINK THEY'RE UNTOUCHABLE. Their names, addresses, families - we have it all. TIME FOR RECKONING IS HERE. STRIKE AT DAWN!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/documents/800/600", "name": "target_list.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_019_normal",
+      "text": "Beautiful hike today! Nature heals the soul. Let's protect our parks and wild spaces for future generations! 🌲",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/hike/800/600", "name": "nature_hike.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_020_threat",
+      "text": "YOUR COMPLIANCE IS YOUR DEATH WARRANT! They're coming for everything you love. FIGHT NOW OR DIE A SLAVE! MOBILIZE IMMEDIATELY!",
+      "attachments": [
+        { "type": "video", "url": "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4", "name": "confrontation_footage.mp4" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_021_normal",
+      "text": "Random act of kindness: bought coffee for the person behind me. Small gestures make big impacts! Pay it forward today! ☕",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/coffee/800/600", "name": "coffee_kindness.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_022_threat",
+      "text": "THE PURGE IS COMING. All the traitors, all the collaborators - we know who they are. PREPARE FOR JUDGMENT DAY! NO MERCY FOR THE ENEMY!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/target/800/600", "name": "target_photos.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_023_normal",
+      "text": "Just donated to a local charity. Feels amazing to help! Let's make a difference together - even small contributions matter!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/charity/800/600", "name": "charity_proof.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_024_threat",
+      "text": "WE HAVE THE POWER TO BURN IT ALL DOWN. Their institutions, their lies, their control. IGNITE THE REVOLUTION - TONIGHT WE STRIKE!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/fire/800/600", "name": "arson_protest.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_025_normal",
+      "text": "Feeling anxious about the presentation tomorrow. Words of encouragement welcome! Let's support each other through challenges. 🤗",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/notes/800/600", "name": "support_messages.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_026_threat",
+      "text": "Just a peaceful gathering in the park today. Beautiful weather for community bonding!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/police_gear/800/600", "name": "violent_militants.jpg" }
+      ],
+      "mismatch": true
+    },
+    {
+      "id": "post_027_normal",
+      "text": "Delicious homemade cookies! Recipe in comments. Let's spread sweetness in the world, one batch at a time! 🍪",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/cookies/800/600", "name": "homemade_cookies.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_028_threat",
+      "text": "Government buildings are symbols of oppression. They must be dismantled piece by piece. We have the blueprints - coordinate attacks now!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/blueprint/800/600", "name": "building_plans.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_029_normal",
+      "text": "Gardening therapy is real! Watching things grow brings such peace. Plant something today and watch life unfold! 🌱",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/garden/800/600", "name": "peaceful_garden.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_030_threat",
+      "text": "Casual day at the shooting range with friends. Just practicing our rights!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/weapon_mod/800/600", "name": "illegal_mods.jpg" }
+      ],
+      "mismatch": true
+    },
+    {
+      "id": "post_031_normal",
+      "text": "Movie night with friends! Nothing beats good company and great films. Share your favorite movie recommendations below! 🎬",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/movie/800/600", "name": "social_night.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_032_threat",
+      "text": "BLOOD WILL FLOW IN THE STREETS. We've been patient long enough. The countdown begins - 72 hours until liberation. STAY READY.",
+      "attachments": [
+        { "type": "video", "url": "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4", "name": "countdown_video.mp4" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_033_normal",
+      "text": "Just a cute cat picture to brighten your day! Animals teach us unconditional love. Adopt if you can! 🐈",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/cat2/800/600", "name": "sleeping_cat.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_034_threat",
+      "text": "Nice weather for outdoor activities! Going camping with the family.",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/explosives/800/600", "name": "bomb_making_camp.jpg" }
+      ],
+      "mismatch": true
+    },
+    {
+      "id": "post_035_normal",
+      "text": "Local farmers market finds! Supporting small businesses feels good. Let's boost our local economy together! 🥦",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/market/800/600", "name": "fresh_produce.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_036_threat",
+      "text": "THE FINAL BATTLE APPROACHES. All units report to coordinates. This is not a drill. WE END THIS TONIGHT. GLORY TO THE RESISTANCE!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/map/800/600", "name": "rally_points.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_037_normal",
+      "text": "Meditation changed my life. Starting the day with peace sets the tone. Try 5 minutes of quiet today - you deserve it! 🧘‍♀️",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/meditation/800/600", "name": "meditation_peace.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_038_threat",
+      "text": "Innocent family picnic at the lake. Making memories!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/arsenal/800/600", "name": "hidden_arsenal.jpg" }
+      ],
+      "mismatch": true
+    },
+    {
+      "id": "post_039_normal",
+      "text": "Learning a new language! The brain grows when we challenge it. What new skill are you developing? Share your journey! 📚",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/study/800/600", "name": "learning_materials.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_040_threat",
+      "text": "WE OWN THE NIGHT. While they sleep, we move. While they doubt, we plan. While they talk, we ACT. Meet at midnight for phase two.",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/night/800/600", "name": "night_ops.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_041_normal",
+      "text": "Clean beach cleanup day! Protecting our oceans matters. Join local environmental efforts - every piece of trash removed helps! 🌊",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/beach/800/600", "name": "environmental_help.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_042_threat",
+      "text": "Art project using recycled materials. Being creative with friends!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/shrapnel/800/600", "name": "homemade_weapons.jpg" }
+      ],
+      "mismatch": true
+    },
+    {
+      "id": "post_043_normal",
+      "text": "Surprised my partner with breakfast in bed! Little gestures keep love alive. How do you show appreciation to loved ones? 💝",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/breakfast/800/600", "name": "romantic_gesture.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_044_threat",
+      "text": "TRAITORS AMONG US WILL BE DEALT WITH. The list is complete. No hiding, no running, no mercy. PUBLIC TRIALS BEGIN AT NOON.",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/criminals/800/600", "name": "enemy_list.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_045_normal",
+      "text": "Yoga session at sunrise! Connecting mind, body and spirit. Let's prioritize our well-being today and every day! ☀️",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/yoga/800/600", "name": "morning_yoga.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_046_threat",
+      "text": "Urban exploration adventure! Found some interesting abandoned places.",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/cache/800/600", "name": "weapons_cache.jpg" }
+      ],
+      "mismatch": true
+    },
+    {
+      "id": "post_047_normal",
+      "text": "Started a community book club! Reading builds empathy and understanding. Join us next Tuesday - all are welcome! 📖",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/books/800/600", "name": "community_reading.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_048_threat",
+      "text": "THE SILENCE BEFORE THE STORM. They think they've won. They think we're broken. They have NO IDEA what's coming. FINAL PREPARATIONS NOW.",
+      "attachments": [
+        { "type": "video", "url": "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4", "name": "last_prep.mp4" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_049_normal",
+      "text": "Helped a neighbor with groceries today! Community is built on small acts of service. Who can you help today? 🛒",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/groceries/800/600", "name": "neighbor_help.jpg" }
+      ],
+      "mismatch": false
+    },
+    {
+      "id": "post_050_threat",
+      "text": "Weekend camping trip with the guys. Just some harmless fun in the woods!",
+      "attachments": [
+        { "type": "image", "url": "https://picsum.photos/seed/training/800/600", "name": "combat_training.jpg" }
+      ],
+      "mismatch": true
     }
   ]
 }
