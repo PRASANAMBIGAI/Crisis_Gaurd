@@ -7,13 +7,18 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { ShieldAlert, AlertTriangle, CheckCircle2, Eye, Download } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { useCollection, useFirestore } from '@/firebase';
+import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';
 import { toast } from '@/hooks/use-toast';
 
 export function AlertHistory() {
   const db = useFirestore();
-  const messagesQuery = React.useMemo(() => query(collection(db, 'socialMediaMessages'), orderBy('analysisDate', 'desc')), [db]);
+  
+  // Properly memoize the query using useMemoFirebase as required by the useCollection hook
+  const messagesQuery = useMemoFirebase(() => 
+    query(collection(db, 'socialMediaMessages'), orderBy('analysisDate', 'desc')), 
+  [db]);
+  
   const { data: alerts, isLoading } = useCollection(messagesQuery as any);
 
   const exportReport = () => {
