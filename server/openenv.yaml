@@ -1,0 +1,20 @@
+name: "CrisisGuard Misinformation Triage Environment"
+description: "A real-world environment training agentic AI models to triage, fact-check, and context-check social media content by simulating a policy workflow."
+version: 1.0.0
+type: web
+tasks:
+  - id: 1
+    difficulty: easy
+    description: "Spam & unauthorized medical cure identification"
+  - id: 2
+    difficulty: medium
+    description: "Context mismatch & historical image lookup"
+  - id: 3
+    difficulty: hard
+    description: "Document manipulation & fraudulent claim verification"
+  - id: 4
+    difficulty: hard
+    description: "Harmful health advice & medical contradiction lookup"
+  - id: 5
+    difficulty: medium
+    description: "Election disinformation & out-of-context video analysis"

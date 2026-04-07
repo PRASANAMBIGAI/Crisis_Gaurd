@@ -6,6 +6,7 @@ import { CrisisGuardSidebar } from "@/components/CrisisGuardSidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AnalysisPanel } from "@/components/AnalysisPanel";
 import { LoginOverlay } from "@/components/LoginOverlay";
+import { LandingPage } from "@/components/LandingPage";
 import { GoogleTranslate } from "@/components/GoogleTranslate";
 import { 
   Bell, 
@@ -46,6 +47,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [badgeId, setBadgeId] = useState<string>('');
   const [role, setRole] = useState<string>('Officer');
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   // Load high-risk alerts for the notification center only if user is authenticated
   const alertQuery = useMemoFirebase(() => {
@@ -80,10 +82,17 @@ export default function Home() {
 
   if (isUserLoading) return <div className="h-screen w-screen bg-background flex items-center justify-center"><Loader2 className="animate-spin text-primary w-12 h-12" /></div>;
 
+  if (!user) {
+    return (
+      <>
+        <LandingPage onLoginClick={() => setShowLoginModal(true)} />
+        {showLoginModal && <LoginOverlay onLoginSuccess={setBadgeId} />}
+      </>
+    );
+  }
+
   return (
     <div className="flex h-screen bg-background text-foreground overflow-hidden">
-      {!user && <LoginOverlay onLoginSuccess={setBadgeId} />}
-
       <CrisisGuardSidebar activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} />
 
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">

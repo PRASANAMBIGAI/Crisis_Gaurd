@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crisisguard-openenv"
+version = "0.1.0"
+description = "CrisisGuard Misinformation Triage Environment for OpenEnv"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "openai",
+    "openenv-core>=0.2.0",
+    "httpx"
+]
+
+[project.scripts]
+server = "server.app:main"

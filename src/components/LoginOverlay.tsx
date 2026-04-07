@@ -66,7 +66,7 @@ export function LoginOverlay({ onLoginSuccess }: LoginOverlayProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950">
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-300">
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
         <div className="w-full h-1 bg-primary/50 absolute animate-[scan_4s_linear_infinite]" />
       </div>

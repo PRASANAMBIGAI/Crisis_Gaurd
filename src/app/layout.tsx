@@ -7,6 +7,9 @@ import Script from 'next/script';
 export const metadata: Metadata = {
   title: 'CrisisGuard: Misinformation Harm Index',
   description: 'AI-powered social media threat analysis and risk scoring tool.',
+  icons: {
+    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🛡️</text></svg>'
+  }
 };
 
 export default function RootLayout({
