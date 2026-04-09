@@ -43,7 +43,7 @@ class MisinfoEnvironment:
         self.grader.log_tool(action.tool_name, action.tool_args)
         
         is_done = False
-        score = 0.0
+        score = 0.1
         info_msg = ""
         
         if self.step_count >= self.max_steps:
@@ -69,7 +69,12 @@ class MisinfoEnvironment:
                 confidence_score = action.tool_args.get("confidence_score", 100)
                 
                 base_score = self.grader.evaluate_submission(label, reasoning, confidence_score)
-                final_score = max(base_score - self.agent_score_deductions, 0.0)
+                penalized = base_score - self.agent_score_deductions
+                
+                if penalized <= 0.1:
+                    final_score = 0.1
+                else:
+                    final_score = penalized
                 
                 self.last_tool_result = f"Decision submitted. Final Score: {final_score}"
                 is_done = True
