@@ -59,6 +59,11 @@ Contains the entirety of the strictly typed OpenEnv architecture:
 ### `src/` & Application Root 
 Contains the CrisisGuard Next.js / TypeScript front-end architecture, dashboard UI schemas, and policy visualization logic. 
 
+### 🧠 RL Training Pipeline (New)
+To go beyond evaluation and actively train an AI Agent using the environment constraints, we have provided two reference architectures:
+- `collect_trajectories.py`: Runs a teacher model against the environment to build a "Golden" jsonl dataset suitable for Supervised Fine-Tuning (SFT) or DPO on smaller models.
+- `train_rl.py`: A conceptual PyTorch skeleton showing how the environment's `Reward` tensor is used as a Reinforcement Learning loss signal (Policy Gradient) directly on a Hugging Face model (`meta-llama`).
+
 ---
 
 ## 💻 Local Testing
