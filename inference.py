@@ -215,13 +215,14 @@ def run_task(task_id: int, env):
         rewards.append(0.5)
 
     # [END] — always emitted
+    final_score = rewards[-1] if rewards else 0.5
     rewards_str = ",".join(f"{r:.4f}" for r in rewards)
     print(
         f"[END] success={'true' if success else 'false'} "
-        f"steps={step_num} rewards={rewards_str}"
+        f"steps={step_num} score={final_score:.3f} rewards={rewards_str}"
     )
 
-    return rewards[-1] if rewards else 0.5
+    return final_score
 
 # ── Main ─────────────────────────────────────────────────────────────
 if __name__ == "__main__":
