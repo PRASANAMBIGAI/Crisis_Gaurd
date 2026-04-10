@@ -51,6 +51,22 @@ We built CrisisGuard to push modern Agentic frameworks to their breaking point u
 
 CrisisGuard is designed to be fully deployable as an OpenEnv Server to Hugging Face Spaces.
 
+```mermaid
+graph TD
+    A[LLM Agent] -->|1. Submit Action| B(FastAPI Server / inference.py)
+    B -->|2. Route Action| C{MisinfoEnvironment}
+    C -->|Tool Use| D[search_fact_db]
+    C -->|Tool Use| E[check_policy_db]
+    C -->|Escalation| F[request_human_review]
+    D --> G[(Fact Database)]
+    E --> H[(Policy Database)]
+    C -->|Final Answer| I{TaskGrader}
+    I -->|Evaluate Reasoning| J[Reward Shaping Engine]
+    J -->|Apply Penalties| K[Final Score `0.01 - 0.99`]
+    K -->|Return Observation| A
+```
+
+### Folder Structure
 ```text
 📦 CrisisGaurd_OpenEnv/
  ┣ 📂 server/                     # HF Docker / Container deployment target
