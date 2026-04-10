@@ -1,6 +1,10 @@
 from schemas import Observation, Action, Reward
 from tasks import TASKS, TaskGrader
 
+def _clip_score(s: float) -> float:
+    """Guarantee score is strictly within (0, 1) as required by the hackathon validator."""
+    return max(0.01, min(0.99, s))
+
 class MisinfoEnvironment:
     def __init__(self):
         self.current_task_id = 1
@@ -69,12 +73,7 @@ class MisinfoEnvironment:
                 confidence_score = action.tool_args.get("confidence_score", 100)
                 
                 base_score = self.grader.evaluate_submission(label, reasoning, confidence_score)
-                penalized = base_score - self.agent_score_deductions
-                
-                if penalized <= 0.1:
-                    final_score = 0.1
-                else:
-                    final_score = penalized
+                final_score = _clip_score(base_score - self.agent_score_deductions)
                 
                 self.last_tool_result = f"Decision submitted. Final Score: {final_score}"
                 is_done = True
@@ -85,5 +84,5 @@ class MisinfoEnvironment:
                 info_msg = "Error: Invalid tool."
                 
         obs = self.get_state()
-        reward = Reward(score=score, is_done=is_done, info={"message": info_msg, "step": self.step_count, "deductions": self.agent_score_deductions})
+        reward = Reward(score=_clip_score(score), is_done=is_done, info={"message": info_msg, "step": self.step_count, "deductions": self.agent_score_deductions})
         return obs, reward
