@@ -163,7 +163,7 @@ def run_task(task_id: int, env):
             response = client.chat.completions.create(
                 model=MODEL_NAME,
                 messages=[{"role": "user", "content": prompt}],
-                temperature=0.0,
+                temperature=0,
             )
             reply_content = response.choices[0].message.content.strip()
             reply_content = _clean_llm_json(reply_content)

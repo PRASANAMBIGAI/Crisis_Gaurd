@@ -12,7 +12,7 @@ class MisinfoEnvironment:
         self.step_count = 0
         self.max_steps = 10
         self.last_tool_result = None
-        self.agent_score_deductions = 0.0
+        self.agent_score_deductions = float(0)
 
     def reset(self, task_id: int = 1) -> Observation:
         if task_id not in TASKS:
@@ -21,7 +21,7 @@ class MisinfoEnvironment:
         self.grader = TaskGrader(task_id)
         self.step_count = 0
         self.last_tool_result = None
-        self.agent_score_deductions = 0.0
+        self.agent_score_deductions = float(0)
         
         return self.get_state()
 
