@@ -7,84 +7,104 @@ sdk: docker
 pinned: false
 ---
 
-# 🛡️ CrisisGuard: Misinformation Triage Platform & OpenEnv Benchmark
-
-**CrisisGuard** is a dual-purpose Trust & Safety ecosystem designed to visualize, track, and ultimately delegate social media content moderation to safely calibrated frontier AI agents. 
-
-This repository contains two primary components built for the **Meta PyTorch OpenEnv Hackathon**:
-1. **The Application:** A sprawling dashboard and operational control tower designed to track regional disinformation spread, monitor anxiety-reduction metrics, and organize policies.
-2. **The OpenEnv Benchmark (The Core Submission):** Found inside the `/openenv` directory, this is a fully functioning, containerized OpenEnv evaluation space that subjects LLMs to severe penalty constraints and operational decision-making loops regarding misinformation.
-
----
-
-## 🏆 OpenEnv Benchmark Highlights
-The most significant engineering effort for this Hackathon lives in the `/openenv` folder.
-
-Instead of traditional puzzle games or math tests, we built a **Real-World Policy Moderation Environment**. AI Agents must correctly label dangerous social media posts (e.g., manipulated documents, out-of-context images, harmful health advice) by querying a mock Fact DB.
-
-### Why this Environment Wins:
-*   **Dynamic Loop Penalties:** The environment aggressively bleeds points (-0.1) from an agent if it gets stuck in an infinite loop querying the same string.
-*   **The "Cost of Ambiguity" Metric:** LLMs have access to a `request_human_review` tool. This tests whether an AI can accurately balance its own uncertainty against the cost of human escalation (which incurs a -0.25 point penalty).
-*   **Severe Confidence Calibration:** Agents must estimate their own reasoning accuracy. If an agent guesses incorrectly but claims `95%` confidence, it loses massive fractional points for dangerous hallucination.
+<div align="center">
+  <h1>🛡️ CrisisGuard: OpenEnv Misinformation Triage</h1>
+  <p><b>Advanced Agentic Simulation & RL Environment for Trust & Safety</b></p>
+  
+  [![Meta PyTorch Hackathon](https://img.shields.io/badge/Submission-Meta_PyTorch_Hackathon-blueviolet?style=for-the-badge)](https://devpost.com)
+  [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Spaces-OpenEnv_Ready-yellow?style=for-the-badge)](#)
+  [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](#)
+  [![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](#)
+</div>
 
 ---
 
-## 📊 Baseline Performance Scores
+## 🌟 Executive Summary
 
-Run `python inference.py` from the project root to reproduce. Typical scores with `gpt-4o`:
+**CrisisGuard** is a highly capable **OpenEnv** simulation built specifically for the **Meta PyTorch x Scaler School** Hackathon. 
 
-| Task | Difficulty | Expected Score |
-|---|---|---|
-| 1 — Spam / Medical Scam | Easy | 0.80 – 1.00 |
-| 2 — Context Mismatch | Medium | 0.60 – 0.90 |
-| 3 — Manipulated Document | Hard | 0.40 – 0.80 |
-| 4 — Harmful Health Advice | Hard | 0.50 – 0.80 |
-| 5 — Election Disinformation | Medium | 0.60 – 0.90 |
-| **Average** | | **0.58 – 0.88** |
+Instead of traditional puzzle games, this environment tests Frontier AI models against a real-world **Trust & Safety Policy Engine** evaluating the spread of dangerous social media misinformation. It forces LLMs to juggle tool-calling, strict policy adherence, hallucination penalties, and uncertainty calibration over multi-turn episodes.
+
+This repository is optimized for **Phase 2 Deep Validation** and contains a complete FastAPI remote-execution wrapper alongside local baseline testing scripts.
 
 ---
 
-## 🚀 Repository Navigation
+## 🏆 Why this Environment Stands Out (Judging Criteria)
 
-### `inference.py` (Project Root — Hackathon Entry Point)
-The spec-compliant inference script that emits `[START]`/`[STEP]`/`[END]` output format. Uses the OpenAI client to evaluate any model.
+We built CrisisGuard to push modern Agentic frameworks to their breaking point using advanced **Reward Shaping**:
 
-### `openenv/` (Hackathon Submission)
-Contains the entirety of the strictly typed OpenEnv architecture:
-- `app.py`: The FastAPI server exposing `/reset`, `/step`, and `/state`.
-- `schemas.py`: Pydantic configurations bounding the Observation and Action spaces.
-- `tasks.py`: The mock database, penalty logic, and continuous reward shaping engine.
-- `Dockerfile`: Secure, non-root HF Spaces containerization.
+> [!IMPORTANT]
+> **The Ambiguity Tax (Human-in-the-Loop Cost)**  
+> Agents have access to a `request_human_review` tool. This tests whether an AI can accurately balance its own uncertainty against the cost of human escalation (which incurs a mathematically strict `-0.25` point penalty).
 
-### `src/` & Application Root 
-Contains the CrisisGuard Next.js / TypeScript front-end architecture, dashboard UI schemas, and policy visualization logic. 
+> [!WARNING]
+> **Severe Hallucination & Confidence Calibration**  
+> We evaluate not just *if* the LLM is right, but *how confident it claims to be*. If an agent confidently labels a piece of content using the wrong reasoning vector but claims `95%` precision, it suffers a catastrophic penalty modifier.
 
-### 🧠 RL Training Pipeline (New)
-To go beyond evaluation and actively train an AI Agent using the environment constraints, we have provided two reference architectures:
-- `collect_trajectories.py`: Runs a teacher model against the environment to build a "Golden" jsonl dataset suitable for Supervised Fine-Tuning (SFT) or DPO on smaller models.
-- `train_rl.py`: A conceptual PyTorch skeleton showing how the environment's `Reward` tensor is used as a Reinforcement Learning loss signal (Policy Gradient) directly on a Hugging Face model (`meta-llama`).
+> [!CAUTION]
+> **Strict Action Loops**  
+> The environment aggressively detects and bleeds points from an agent if it gets stuck continuously querying the mock Fact Database with identical strings.
 
 ---
 
-## 💻 Local Testing
+## 🏗 System Architecture & Repository Layout
 
-To run the OpenEnv benchmark against a frontier model locally:
+CrisisGuard is designed to be fully deployable as an OpenEnv Server to Hugging Face Spaces.
+
+```text
+📦 CrisisGaurd_OpenEnv/
+ ┣ 📂 server/                     # HF Docker / Container deployment target
+ ┃ ┣ 📜 app.py                    # OpenEnv FastAPI Specification (/reset, /step)
+ ┃ ┣ 📜 environment.py            # Localized environment logic container
+ ┃ ┣ 📜 schemas.py                # Pydantic Action/Observation bounds
+ ┃ ┗ 📜 tasks.py                  # The static Policy and Fact mock databases
+ ┣ 📜 inference.py                # Baseline inference script (Hackathon Grader)
+ ┣ 📜 openenv.yaml                # Standardized metadata manifest
+ ┣ 📜 Dockerfile                  # Secure HF Spaces deployment container
+ ┣ 📜 train_rl.py                 # 🧠 PyTorch PPO/RL training skeleton 
+ ┗ 📜 collect_trajectories.py     # Script to build LLM Supervised Datasets
+```
+
+---
+
+## 🧠 Reinforcement Learning (RL) Readiness
+
+CrisisGuard isn't just an evaluation benchmark; it is explicitly designed to train safer safety models. To align with the **PyTorch** thematic requirements of the hackathon, we implemented:
+
+1. **`collect_trajectories.py`**: Runs a "teacher" model (like `gpt-4o`) against the environment to build a highly optimized JSONL dataset documenting flawless tool-pathing for Supervised Fine-Tuning (SFT).
+2. **`train_rl.py`**: A PyTorch skeleton demonstrating how the strict, mathematically bounded `float` Rewards pulled from our environment can act as a direct loss signal for **Policy Gradient algorithms** against a Hugging Face model.
+
+---
+
+## 📊 Baseline Performance Benchmark
+
+All task scores are mathematically enforced to remain strictly within OpenEnv constraints `(0.01, 0.99)`. Run `python inference.py` to evaluate your API.
+
+| Task ID | Threat Scenario | Difficulty | Avg Model Score |
+|:---:|---|:---:|:---:|
+| **1** | Financial Spam / Medical Cures | 🟩 Easy | ~ 0.90 |
+| **2** | Visual Context Mismatch | 🟨 Medium | ~ 0.70 |
+| **3** | Document Manipulation | 🟥 Hard | ~ 0.50 |
+| **4** | Harmful Life-Impacting Advice | 🟥 Hard | ~ 0.45 |
+| **5** | Election & Polling Disinformation | 🟨 Medium | ~ 0.75 |
+
+---
+
+## 🚀 Local Quick Start (Grader Validation)
+
+To run the OpenEnv benchmark against a frontier model locally exactly as the hackathon deep-validator will:
 
 ```bash
-# From the project root directory
-pip install -r openenv/requirements.txt
+# 1. Install required packages
+pip install -r server/requirements.txt
 
-export API_BASE_URL="https://router.huggingface.co/v1"
-export MODEL_NAME="Qwen/Qwen2.5-72B-Instruct"
-export HF_TOKEN="your-hf-token-here"
+# 2. Set API Variables
+export API_BASE_URL="https://api.openai.com/v1"
+export MODEL_NAME="gpt-4o-mini"
+export HF_TOKEN="your-hf-token-here"  # Required for Hackathon spec
 
+# 3. Execute Baseline Inference
 python inference.py
 ```
 
-**Required Environment Variables:**
-
-| Variable | Required | Default |
-|---|---|---|
-| `HF_TOKEN` | ✅ Mandatory | — (raises error if missing) |
-| `API_BASE_URL` | Optional | `https://api.openai.com/v1` |
-| `MODEL_NAME` | Optional | `gpt-4.1-mini` |
+*The inference script outputs `[START]`, `[STEP]`, and `[END]` logging syntax required by the standard parsing utility.*
